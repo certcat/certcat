@@ -247,8 +247,8 @@ func ParseRDNSequence(der *cryptobyte.String) (RDNSequence, error) {
 //	  notBefore      Time,
 //	  notAfter       Time }
 type Validity struct {
-	NotBefore time.Time
-	NotAfter  time.Time
+	NotBefore Time
+	NotAfter  Time
 }
 
 func ParseValidity(der *cryptobyte.String) (Validity, error) {
@@ -276,21 +276,26 @@ func ParseValidity(der *cryptobyte.String) (Validity, error) {
 //	Time ::= CHOICE {
 //	  utcTime        UTCTime,
 //	  generalTime    GeneralizedTime }
-func ParseTime(der *cryptobyte.String) (time.Time, error) {
+type Time struct {
+	Tag  asn1.Tag
+	Time time.Time
+}
+
+func ParseTime(der *cryptobyte.String) (Time, error) {
 	var t time.Time
 	if der.PeekASN1Tag(asn1.UTCTime) {
 		if !der.ReadASN1UTCTime(&t) {
-			return time.Time{}, errors.New("failed to parse UTCTime")
+			return Time{}, errors.New("failed to parse UTCTime")
 		}
-		return t, nil
+		return Time{asn1.UTCTime, t}, nil
 	}
 	if der.PeekASN1Tag(asn1.GeneralizedTime) {
 		if !der.ReadASN1GeneralizedTime(&t) {
-			return time.Time{}, errors.New("failed to parse GeneralizedTime")
+			return Time{}, errors.New("failed to parse GeneralizedTime")
 		}
-		return t, nil
+		return Time{asn1.GeneralizedTime, t}, nil
 	}
-	return time.Time{}, errors.New("failed to parse time")
+	return Time{}, errors.New("failed to parse time")
 }
 
 //	SubjectPublicKeyInfo  ::=  SEQUENCE  {

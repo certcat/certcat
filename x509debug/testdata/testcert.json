@@ -10,8 +10,14 @@
       "Raw": "MQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3MgRW5jcnlwdDELMAkGA1UEAxMCRTY="
     },
     "Validity": {
-      "NotBefore": "2025-03-12T21:13:17Z",
-      "NotAfter": "2025-06-10T21:13:16Z"
+      "NotBefore": {
+        "Tag": 23,
+        "Time": "2025-03-12T21:13:17Z"
+      },
+      "NotAfter": {
+        "Tag": 23,
+        "Time": "2025-06-10T21:13:16Z"
+      }
     },
     "Subject": {
       "Raw": "MRcwFQYDVQQDEw53dGYuaW5haGdhLm9yZw=="
