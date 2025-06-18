@@ -751,7 +751,7 @@ func ParseGeneralName(der *cryptobyte.String) (GeneralName, error) {
 		value = string(data)
 	case IPAddress:
 		// Octet String
-		value = net.IP(value).String()
+		value = net.IP(data).String()
 	default:
 		// TODO: Unsupported are just hex encoded
 		value = hex.EncodeToString(data)
