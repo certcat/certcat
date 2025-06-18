@@ -6,9 +6,7 @@
       "Algorithm": "1.2.840.10045.4.3.3",
       "Parameter": null
     },
-    "Issuer": {
-      "Raw": "MQswCQYDVQQGEwJVUzEgMB4GA1UEChMXKFNUQUdJTkcpIExldCdzIEVuY3J5cHQxIjAgBgNVBAMTGShTVEFHSU5HKSBGYWxzZSBGZW5uZWwgRTY="
-    },
+    "Issuer": "C=US,O=(STAGING) Let's Encrypt,CN=(STAGING) False Fennel E6",
     "Validity": {
       "NotBefore": {
         "Tag": 23,
@@ -19,9 +17,7 @@
         "Time": "2025-06-13T11:33:32Z"
       }
     },
-    "Subject": {
-      "Raw": ""
-    },
+    "Subject": "",
     "SubjectPublicKeyInfo": {
       "Algorithm": {
         "Algorithm": "1.2.840.10045.2.1",

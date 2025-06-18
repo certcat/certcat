@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/cryptobyte"
@@ -229,18 +230,90 @@ func (serial CertificateSerialNumber) MarshalJSON() ([]byte, error) {
 
 // RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
 // RelativeDistinguishedName ::= SET SIZE (1..MAX) OF AttributeTypeAndValue
-type RDNSequence struct {
-	Raw []byte // TODO
+type RDNSequence string
+
+var DNNames = map[string]string{
+	"2.5.4.3":                    "CN",
+	"2.5.4.7":                    "L",
+	"2.5.4.8":                    "ST",
+	"2.5.4.10":                   "O",
+	"2.5.4.11":                   "OU",
+	"2.5.4.6":                    "C",
+	"2.5.4.9":                    "STREET",
+	"0.9.2342.19200300.100.1.25": "DC",
+	"0.9.2342.19200300.100.1.1":  "UID",
 }
 
+func RDNString(atv AttributeTypeAndValue) string {
+	name, ok := DNNames[atv.Type.String()]
+	if !ok {
+		name = atv.Type.String()
+	}
+	if atv.Tag == asn1.PrintableString {
+		return name + "=" + string(atv.Value)
+	}
+
+	// Unknown value type, return as hex
+	return fmt.Sprintf("%s=%d:%s", name, atv.Tag, hex.EncodeToString(atv.Value))
+}
+
+// ParseRDNSequence turns the DER RDNs into a string, per RFC4514 representation
 func ParseRDNSequence(der *cryptobyte.String) (RDNSequence, error) {
 	var rdnSequence cryptobyte.String
 	if !der.ReadASN1(&rdnSequence, asn1.SEQUENCE) {
-		return RDNSequence{}, errors.New("failed to read RDNSequence")
+		return "", errors.New("failed to read RDNSequence")
 	}
-	return RDNSequence{
-		Raw: rdnSequence,
-	}, nil
+
+	var ret strings.Builder
+
+	for !rdnSequence.Empty() {
+		var atvSet cryptobyte.String
+		if !rdnSequence.ReadASN1(&atvSet, asn1.SET) {
+			return "", errors.New("failed to read ATVSet")
+		}
+		for !atvSet.Empty() {
+			atv, err := ParseATV(&atvSet)
+			if err != nil {
+				return "", err
+			}
+			if ret.Len() > 0 {
+				ret.WriteRune(',')
+			}
+			ret.WriteString(RDNString(atv))
+		}
+	}
+
+	return RDNSequence(ret.String()), nil
+}
+
+// AttributeTypeAndValue ::= SEQUENCE {
+// type     AttributeType,
+// value    AttributeValue }
+// This represents an ATV as its oid and its raw value
+type AttributeTypeAndValue struct {
+	Type  ObjectIdentifier
+	Tag   asn1.Tag
+	Value cryptobyte.String
+}
+
+func ParseATV(der *cryptobyte.String) (AttributeTypeAndValue, error) {
+	var atv cryptobyte.String
+	if !der.ReadASN1(&atv, asn1.SEQUENCE) {
+		return AttributeTypeAndValue{}, errors.New("failed to read ATV")
+	}
+
+	oid, err := ParseObjectIdentifier(&atv)
+	if err != nil {
+		return AttributeTypeAndValue{}, err
+	}
+
+	ret := AttributeTypeAndValue{
+		Type: oid,
+	}
+	if !atv.ReadAnyASN1(&ret.Value, &ret.Tag) {
+		return AttributeTypeAndValue{}, errors.New("failed to read ATV Value")
+	}
+	return ret, nil
 }
 
 //	Validity ::= SEQUENCE {
