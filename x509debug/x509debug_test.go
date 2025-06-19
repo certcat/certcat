@@ -12,12 +12,14 @@ import (
 	"golang.org/x/crypto/cryptobyte"
 )
 
+// TestCertJSON makes sure that the JSON generated from a certificate object matches expected JSON
 func TestCertJSON(t *testing.T) {
 	for _, tc := range []struct {
 		name string
 	}{
-		{"testcert"},
 		{"ipcert"},
+		{"testcert"},
+		{"wikipedia"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			data, err := os.ReadFile(filepath.Join("testdata", tc.name+".pem"))
@@ -49,6 +51,8 @@ func TestCertJSON(t *testing.T) {
 			}
 
 			if !reflect.DeepEqual(got, expected) {
+				// Write out what we got, for easier diffing
+				_ = os.WriteFile(filepath.Join("testdata", tc.name+".got.json"), gotJSON, 0644)
 				fmt.Println("Got:")
 				fmt.Println(string(gotJSON))
 				fmt.Println("Expected:")

@@ -249,7 +249,7 @@ func RDNString(atv AttributeTypeAndValue) string {
 	if !ok {
 		name = atv.Type.String()
 	}
-	if atv.Tag == asn1.PrintableString {
+	if atv.Tag == asn1.PrintableString || atv.Tag == asn1.UTF8String {
 		return name + "=" + string(atv.Value)
 	}
 
