@@ -76,7 +76,14 @@
 			{
 				"ExtnId": "2.5.29.31",
 				"Critical": false,
-				"ExtnValue": "TODO: CRLDP"
+				"ExtnValue": [
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://x1.c.lencr.org/"
+						}
+					}
+				]
 			}
 		]
 	},

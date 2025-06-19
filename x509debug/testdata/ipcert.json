@@ -79,7 +79,14 @@
 			{
 				"ExtnId": "2.5.29.31",
 				"Critical": false,
-				"ExtnValue": "TODO: CRLDP"
+				"ExtnValue": [
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://stg-e6.c.lencr.org/96.crl"
+						}
+					}
+				]
 			},
 			{
 				"ExtnId": "1.3.6.1.4.1.11129.2.4.2",

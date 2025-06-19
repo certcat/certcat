@@ -258,7 +258,20 @@
 			{
 				"ExtnId": "2.5.29.31",
 				"Critical": false,
-				"ExtnValue": "TODO: CRLDP"
+				"ExtnValue": [
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://crl3.digicert.com/ca3-g28.crl"
+						}
+					},
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://crl4.digicert.com/ca3-g28.crl"
+						}
+					}
+				]
 			},
 			{
 				"ExtnId": "2.5.29.32",

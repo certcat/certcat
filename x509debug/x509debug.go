@@ -691,11 +691,67 @@ func ParseExtKeyUsageExtension(der *cryptobyte.String) (string, error) {
 	return "TODO: ExtKeyUsage", nil
 }
 
-// ParseCRLDPExtension as described in RFC5280 4.2.1.13
-func ParseCRLDPExtension(der *cryptobyte.String) (string, error) {
+type DistributionPoint struct {
+	// The DPN could theoretically be a RelativeDistinguishedName
+	// However, that's not permitted in BRs, and is unused.
+	DistributionPointName GeneralName
+}
 
-	// TODO
-	return "TODO: CRLDP", nil
+// ParseCRLDPExtension as described in RFC5280 4.2.1.13
+// CRLDistributionPoints ::= SEQUENCE SIZE (1..MAX) OF DistributionPoint
+//
+//	DistributionPoint ::= SEQUENCE {
+//	     distributionPoint       [0]     DistributionPointName OPTIONAL,
+//	     reasons                 [1]     ReasonFlags OPTIONAL,
+//	     cRLIssuer               [2]     GeneralNames OPTIONAL }
+//
+//	DistributionPointName ::= CHOICE {
+//	     fullName                [0]     GeneralNames,
+//	     nameRelativeToCRLIssuer [1]     RelativeDistinguishedName }
+//
+// ReasonFlags ::= BIT STRING
+func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
+	var dps cryptobyte.String
+	if !der.ReadASN1(&dps, asn1.SEQUENCE) {
+		return nil, errors.New("failed to read CRL Distribution Points extension")
+	}
+
+	var ret []DistributionPoint
+
+	for !dps.Empty() {
+		var dp cryptobyte.String
+		if !dps.ReadASN1(&dp, asn1.SEQUENCE) {
+			return nil, errors.New("failed to read CRL Distribution Point")
+		}
+
+		var dpn cryptobyte.String
+		var hasDPN bool
+		if !dp.ReadOptionalASN1(&dpn, &hasDPN, asn1.Tag(0).Constructed().ContextSpecific()) {
+			return nil, errors.New("failed to read CRL Distribution Point Name")
+		}
+		if !hasDPN {
+			return nil, fmt.Errorf("DistributionPoint had no Distribution Point Name in %s", hex.EncodeToString(dp))
+		}
+
+		var fullName cryptobyte.String
+		var hasFullName bool
+		if !dpn.ReadOptionalASN1(&fullName, &hasFullName, asn1.Tag(0).Constructed().ContextSpecific()) {
+			return nil, errors.New("failed to read FullName")
+		}
+
+		gn, err := ParseGeneralName(&fullName)
+		if err != nil {
+			return nil, err
+		}
+
+		if !dp.Empty() {
+			return nil, errors.New("unsupported CRLDP options")
+		}
+
+		ret = append(ret, DistributionPoint{DistributionPointName: gn})
+	}
+
+	return ret, nil
 }
 
 // ParseInhibitAnyPolicyExtension as described in RFC5280 4.2.1.14
@@ -839,7 +895,7 @@ func ParseGeneralName(der *cryptobyte.String) (GeneralName, error) {
 	var data cryptobyte.String
 	var tag asn1.Tag
 	if !der.ReadAnyASN1(&data, &tag) {
-		return GeneralName{}, errors.New("failed to read general name")
+		return GeneralName{}, fmt.Errorf("failed to read general name from %s", hex.EncodeToString(*der))
 	}
 
 	// remove context-specific bit
