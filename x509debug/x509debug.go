@@ -663,11 +663,44 @@ func ParseSDAExtension(der *cryptobyte.String) (string, error) {
 	return "TODO: SDA", nil
 }
 
-// ParseBasicConstraintsExtension as described in RFC5280 4.2.1.9
-func ParseBasicConstraintsExtension(der *cryptobyte.String) (string, error) {
+type BasicConstraints struct {
+	CA                   bool
+	PathLengthConstraint *int `json:",omitempty"`
+}
 
-	// TODO
-	return "TODO: BasicConstraints", nil
+// ParseBasicConstraintsExtension as described in RFC5280 4.2.1.9
+//
+//	BasicConstraints ::= SEQUENCE {
+//	    cA                      BOOLEAN DEFAULT FALSE,
+//	    pathLenConstraint       INTEGER (0..MAX) OPTIONAL }
+func ParseBasicConstraintsExtension(der *cryptobyte.String) (BasicConstraints, error) {
+	var bce cryptobyte.String
+	if !der.ReadASN1(&bce, asn1.SEQUENCE) {
+		return BasicConstraints{}, errors.New("failed to parse basic constraints")
+	}
+
+	var CA bool
+	if bce.PeekASN1Tag(asn1.BOOLEAN) {
+		if !bce.ReadASN1Boolean(&CA) {
+			return BasicConstraints{}, errors.New("failed to parse basic constraints CA")
+		}
+	}
+
+	if bce.PeekASN1Tag(asn1.INTEGER) {
+		pathLen := -1
+		if !bce.ReadASN1Integer(&pathLen) {
+			return BasicConstraints{}, errors.New("failed to parse basic constraints path length")
+		}
+		return BasicConstraints{
+			CA:                   CA,
+			PathLengthConstraint: &pathLen,
+		}, nil
+	}
+
+	return BasicConstraints{
+		CA:                   CA,
+		PathLengthConstraint: nil,
+	}, nil
 }
 
 // ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
@@ -745,6 +778,7 @@ func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
 		}
 
 		if !dp.Empty() {
+			// reasons and CRLIssuer are "MUST NOT" per CA/B BRs, so assume they don't occur
 			return nil, errors.New("unsupported CRLDP options")
 		}
 

@@ -41,7 +41,9 @@
 			{
 				"ExtnId": "2.5.29.19",
 				"Critical": true,
-				"ExtnValue": "TODO: BasicConstraints"
+				"ExtnValue": {
+					"CA": false
+				}
 			},
 			{
 				"ExtnId": "2.5.29.35",
