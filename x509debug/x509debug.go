@@ -571,13 +571,17 @@ func ParseAKIExtension(der *cryptobyte.String) (string, error) {
 	//      keyIdentifier             [0] KeyIdentifier           OPTIONAL,
 	//      authorityCertIssuer       [1] GeneralNames            OPTIONAL,
 	//      authorityCertSerialNumber [2] CertificateSerialNumber OPTIONAL  }
-	return "AKI", nil
+
+	// TODO
+	return "TODO: AKI", nil
 }
 
 // ParseSKIExtension as described in RFC5280 4.2.1.2
 func ParseSKIExtension(der *cryptobyte.String) (string, error) {
 	//    SubjectKeyIdentifier ::= KeyIdentifier
-	return "SKI", nil
+
+	// TODO
+	return "TODO: SKI", nil
 }
 
 type KeyUsage int
@@ -614,12 +618,16 @@ func ParseKeyUsageExtension(der *cryptobyte.String) ([]KeyUsage, error) {
 
 // ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
 func ParseCertPoliciesExtension(der *cryptobyte.String) (string, error) {
-	return "CertPolicies", nil
+
+	// TODO
+	return "TODO: CertPolicies", nil
 }
 
 // ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
 func ParsePolicyMappingsExtension(der *cryptobyte.String) (string, error) {
-	return "PolicyMappings", nil
+
+	// TODO
+	return "TODO: PolicyMappings", nil
 }
 
 // ParseSANExtension as described in RFC5280 4.2.1.6
@@ -650,42 +658,58 @@ func ParseIANExtension(der *cryptobyte.String) ([]GeneralName, error) {
 
 // ParseSDAExtension as described in RFC5280 4.2.1.8
 func ParseSDAExtension(der *cryptobyte.String) (string, error) {
-	return "SDA", nil
+
+	// TODO
+	return "TODO: SDA", nil
 }
 
 // ParseBasicConstraintsExtension as described in RFC5280 4.2.1.9
 func ParseBasicConstraintsExtension(der *cryptobyte.String) (string, error) {
-	return "BasicConstraints", nil
+
+	// TODO
+	return "TODO: BasicConstraints", nil
 }
 
 // ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
 func ParseNameConstraintsExtension(der *cryptobyte.String) (string, error) {
-	return "NameConstraints", nil
+
+	// TODO
+	return "TODO: NameConstraints", nil
 }
 
 // ParsePolicyConstraintsExtension as described in RFC5280 4.2.11.11
 func ParsePolicyConstraintsExtension(der *cryptobyte.String) (string, error) {
-	return "PolicyConstraints", nil
+
+	// TODO
+	return "TODO: PolicyConstraints", nil
 }
 
 // ParseExtKeyUsageExtension as described in RFC5280 4.2.1.12
 func ParseExtKeyUsageExtension(der *cryptobyte.String) (string, error) {
-	return "ExtKeyUsage", nil
+
+	// TODO
+	return "TODO: ExtKeyUsage", nil
 }
 
 // ParseCRLDPExtension as described in RFC5280 4.2.1.13
 func ParseCRLDPExtension(der *cryptobyte.String) (string, error) {
-	return "CRLDP", nil
+
+	// TODO
+	return "TODO: CRLDP", nil
 }
 
 // ParseInhibitAnyPolicyExtension as described in RFC5280 4.2.1.14
 func ParseInhibitAnyPolicyExtension(der *cryptobyte.String) (string, error) {
-	return "InhibitAnyPolicy", nil
+
+	// TODO
+	return "TODO: InhibitAnyPolicy", nil
 }
 
 // ParseFreshestCRLExtension as described in RFC5280 4.2.1.15
 func ParseFreshestCRLExtension(der *cryptobyte.String) (string, error) {
-	return "FreshestCRL", nil
+
+	// TODO
+	return "TODO: FreshestCRL", nil
 }
 
 //	AccessDescription  ::=  SEQUENCE {
