@@ -17,7 +17,9 @@ func TestCertJSON(t *testing.T) {
 	for _, tc := range []struct {
 		name string
 	}{
+		{"e6"},
 		{"ipcert"},
+		{"isrgrootx1"},
 		{"testcert"},
 		{"wikipedia"},
 	} {

@@ -1,0 +1,88 @@
+{
+	"TbsCertificate": {
+		"Version": 2,
+		"SerialNumber": "b0573e9173972770dbb487cb3a452b38",
+		"Signature": {
+			"Algorithm": "1.2.840.113549.1.1.11",
+			"Parameter": null
+		},
+		"Issuer": "C=US,O=Internet Security Research Group,CN=ISRG Root X1",
+		"Validity": {
+			"NotBefore": {
+				"Tag": 23,
+				"Time": "2024-03-13T00:00:00Z"
+			},
+			"NotAfter": {
+				"Tag": 23,
+				"Time": "2027-03-12T23:59:59Z"
+			}
+		},
+		"Subject": "C=US,O=Let's Encrypt,CN=E6",
+		"SubjectPublicKeyInfo": {
+			"Algorithm": {
+				"Algorithm": "1.2.840.10045.2.1",
+				"Parameter": null
+			},
+			"SubjectPublicKey": "BNnxnkaH+CFxYKgm66P6ueraHbkSp9Qm2VEUsWF8dZa/Igs5H9W+0QpGqi08SgmELr5AlVXpGUA3ZnXtMk53BEn4cHvDGOfO93EQ/qx02ADU7W0ccxYzEJw6supsYvS9uA=="
+		},
+		"Extensions": [
+			{
+				"ExtnId": "2.5.29.15",
+				"Critical": true,
+				"ExtnValue": [
+					0,
+					5,
+					6
+				]
+			},
+			{
+				"ExtnId": "2.5.29.37",
+				"Critical": false,
+				"ExtnValue": "TODO: ExtKeyUsage"
+			},
+			{
+				"ExtnId": "2.5.29.19",
+				"Critical": true,
+				"ExtnValue": "TODO: BasicConstraints"
+			},
+			{
+				"ExtnId": "2.5.29.14",
+				"Critical": false,
+				"ExtnValue": "TODO: SKI"
+			},
+			{
+				"ExtnId": "2.5.29.35",
+				"Critical": false,
+				"ExtnValue": "TODO: AKI"
+			},
+			{
+				"ExtnId": "1.3.6.1.5.5.7.1.1",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"AccessMethod": "1.3.6.1.5.5.7.48.2",
+						"AccessLocation": {
+							"Tag": 6,
+							"Value": "http://x1.i.lencr.org/"
+						}
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.32",
+				"Critical": false,
+				"ExtnValue": "TODO: CertPolicies"
+			},
+			{
+				"ExtnId": "2.5.29.31",
+				"Critical": false,
+				"ExtnValue": "TODO: CRLDP"
+			}
+		]
+	},
+	"SignatureAlgorithm": {
+		"Algorithm": "1.2.840.113549.1.1.11",
+		"Parameter": null
+	},
+	"SignatureValue": "fYt7SiA1sgWGCIpunk46r4AExIRcMxkKgUhNlrrv1B21hOaXN/5miE+LOTbrcmU/M9yvC6MVY730GNFoL8IhJ8j8vrOLpMY22OP6baS1k9YMrtDTlwJHoGby04ThTUeBDksS9RiuHvicZqBedQdIF65pZuhpeDcGBcLiYasQr/EO5gxxtLyTmgsHSOVSBcFOn9lgv7LECPq9i7mfH3mpxgrRKSxHpOoZ0KXMcB+hHuvlklHntvcI0mMMQ0mhYj6qtMFStkF1RpCG3IPdIwpVCQqu8GV7s8ubknRzs+3C/Bm19RFOoiPpDkwvyNfvmQ14XkyqqKK5oZ8zhD32kFRQkxa8uZSuh4aTImFxknu39waBxIRXE4jKxlAmQc4QjFZoq1KmQqQg0J/1JF8RlFvJas1VcjLvYlvUB2t6npO6oQjB3l+PNf0DpQH7iUx3Wz5AjQCi6L25FjyE06q6BZ/QlmtYdl/8ZYao4SRqPEs/6cAiF+Qf5zg2UkaWtDphl1LKMuTNLotvsX99HP69V2faNyegodQ0LyTApr/vT01YPE46vNsDLgK+4cL6TrzC/a4WcmF5SRJ938zrv/duJHLXQIku5v0+EwOy59Hdm0PT/Er/84dDV0CSjdR/2XuZM3kpysSKLgD1cKiDA+IRguODCxfO9cyYIg46v9mFmBvyH04="
+}
