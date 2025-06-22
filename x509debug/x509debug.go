@@ -566,22 +566,44 @@ type SCTExtension struct {
 }
 
 // ParseAKIExtension as described in RFC5280 4.2.1.1
-func ParseAKIExtension(der *cryptobyte.String) (string, error) {
+func ParseAKIExtension(der *cryptobyte.String) ([]byte, error) {
 	//    AuthorityKeyIdentifier ::= SEQUENCE {
 	//      keyIdentifier             [0] KeyIdentifier           OPTIONAL,
 	//      authorityCertIssuer       [1] GeneralNames            OPTIONAL,
 	//      authorityCertSerialNumber [2] CertificateSerialNumber OPTIONAL  }
+	//    KeyIdentifier ::= OCTET STRING
+	var aki cryptobyte.String
+	if !der.ReadASN1(&aki, asn1.SEQUENCE) {
+		return nil, errors.New("failed to read AKI extension")
+	}
 
-	// TODO
-	return "TODO: AKI", nil
+	var keyID cryptobyte.String
+	var hasKeyID bool
+	if !aki.ReadOptionalASN1(&keyID, &hasKeyID, asn1.Tag(0).ContextSpecific()) {
+		return nil, errors.New("failed to read AKI extension")
+	}
+
+	if !hasKeyID {
+		return nil, errors.New("failed to read AKI extension: No keyIdentifier")
+	}
+
+	// BRs only permit keyIdentifier
+	if !der.Empty() {
+		return nil, errors.New("failed to read AKI extension: unsupported options")
+	}
+
+	return keyID, nil
 }
 
 // ParseSKIExtension as described in RFC5280 4.2.1.2
-func ParseSKIExtension(der *cryptobyte.String) (string, error) {
+func ParseSKIExtension(der *cryptobyte.String) ([]byte, error) {
 	//    SubjectKeyIdentifier ::= KeyIdentifier
+	var keyID cryptobyte.String
+	if !der.ReadASN1(&keyID, asn1.OCTET_STRING) {
+		return nil, errors.New("failed to read Key ID")
+	}
 
-	// TODO
-	return "TODO: SKI", nil
+	return keyID, nil
 }
 
 type KeyUsage int
@@ -857,7 +879,7 @@ func ParseSCTExtension(der *cryptobyte.String) (SCTExtension, error) {
 		return SCTExtension{}, errors.New("failed to read SCT extension")
 	}
 
-	// The contents of the OCTET_STRING are a TLS structure:
+	// TODO: The contents of the OCTET_STRING are a TLS structure:
 	//
 	// opaque SerializedSCT<1..2^16-1>;
 	//
