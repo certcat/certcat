@@ -588,7 +588,7 @@ func ParseAKIExtension(der *cryptobyte.String) ([]byte, error) {
 	}
 
 	// BRs only permit keyIdentifier
-	if !der.Empty() {
+	if !aki.Empty() {
 		return nil, errors.New("failed to read AKI extension: unsupported options")
 	}
 
