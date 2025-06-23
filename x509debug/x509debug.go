@@ -740,10 +740,26 @@ func ParsePolicyConstraintsExtension(der *cryptobyte.String) (string, error) {
 }
 
 // ParseExtKeyUsageExtension as described in RFC5280 4.2.1.12
-func ParseExtKeyUsageExtension(der *cryptobyte.String) (string, error) {
+func ParseExtKeyUsageExtension(der *cryptobyte.String) ([]ObjectIdentifier, error) {
+	//  KeyPurposeId ::= OBJECT IDENTIFIER
+	//  ExtKeyUsageSyntax ::= SEQUENCE SIZE (1..MAX) OF KeyPurposeId
 
-	// TODO
-	return "TODO: ExtKeyUsage", nil
+	var ekus cryptobyte.String
+	if !der.ReadASN1(&ekus, asn1.SEQUENCE) {
+		return nil, errors.New("failed to parse key usage extension")
+	}
+
+	var ret []ObjectIdentifier
+
+	for !ekus.Empty() {
+		ident, err := ParseObjectIdentifier(&ekus)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, ident)
+	}
+
+	return ret, nil
 }
 
 type DistributionPoint struct {
