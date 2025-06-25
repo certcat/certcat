@@ -18,6 +18,7 @@ func TestCertJSON(t *testing.T) {
 		name string
 	}{
 		{"e6"},
+		{"ip6cert"},
 		{"ipcert"},
 		{"isrgrootx1"},
 		{"testcert"},

@@ -1,0 +1,125 @@
+{
+	"TbsCertificate": {
+		"Version": 2,
+		"SerialNumber": "2c6498a51c55e96f749417be706c1bd162a2",
+		"Signature": {
+			"Algorithm": "1.2.840.10045.4.3.3",
+			"Parameter": null
+		},
+		"Issuer": "C=US,O=(STAGING) Let's Encrypt,CN=(STAGING) False Fennel E6",
+		"Validity": {
+			"NotBefore": {
+				"Tag": 23,
+				"Time": "2025-06-24T21:17:50Z"
+			},
+			"NotAfter": {
+				"Tag": 23,
+				"Time": "2025-07-01T13:17:49Z"
+			}
+		},
+		"Subject": "",
+		"SubjectPublicKeyInfo": {
+			"Algorithm": {
+				"Algorithm": "1.2.840.10045.2.1",
+				"Parameter": null
+			},
+			"SubjectPublicKey": "BLnltixvqAsjo5y6a2ZoP2lwm7bakkLFaOPBjT/m2TFRRw1F6499M/WfAV5bfrxXRzHG1n/DeaZV6Am2CpHGP8I="
+		},
+		"Extensions": [
+			{
+				"ExtnId": "2.5.29.15",
+				"Critical": true,
+				"ExtnValue": [
+					0
+				]
+			},
+			{
+				"ExtnId": "2.5.29.37",
+				"Critical": false,
+				"ExtnValue": [
+					"1.3.6.1.5.5.7.3.1"
+				]
+			},
+			{
+				"ExtnId": "2.5.29.19",
+				"Critical": true,
+				"ExtnValue": {
+					"CA": false
+				}
+			},
+			{
+				"ExtnId": "2.5.29.35",
+				"Critical": false,
+				"ExtnValue": "oXQaBm1Qt4YtSizBfrSNiElszRY="
+			},
+			{
+				"ExtnId": "1.3.6.1.5.5.7.1.1",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"AccessMethod": "1.3.6.1.5.5.7.48.2",
+						"AccessLocation": {
+							"Tag": 6,
+							"Value": "http://stg-e6.i.lencr.org/"
+						}
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.17",
+				"Critical": true,
+				"ExtnValue": [
+					{
+						"Tag": 2,
+						"Value": "2602.ff3a.0001.abad.0c0f.0fee.abad.cafe"
+					},
+					{
+						"Tag": 2,
+						"Value": "2602.ff3a.1.abad.c0f.fee.abad.cafe"
+					},
+					{
+						"Tag": 2,
+						"Value": "abad.cafe"
+					},
+					{
+						"Tag": 2,
+						"Value": "www.abad.cafe"
+					},
+					{
+						"Tag": 7,
+						"Value": "2602:ff3a:1:abad:c0f:fee:abad:cafe"
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.32",
+				"Critical": false,
+				"ExtnValue": "TODO: CertPolicies"
+			},
+			{
+				"ExtnId": "2.5.29.31",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://stg-e6.c.lencr.org/35.crl"
+						}
+					}
+				]
+			},
+			{
+				"ExtnId": "1.3.6.1.4.1.11129.2.4.2",
+				"Critical": false,
+				"ExtnValue": {
+					"Raw": "APAAdgAW6GnB0ZXq18P4lxrj8HYB94zhtp0xqFIYtoN/MagVCAAAAZekA3kcAAAEAwBHMEUCIFcCCnEYwaeShRM7UtwTgAKFiWx2pmtjGDUbmLpiPv1HAiEAztF2+UpMhqqNMBXXnnEcYzGwjUH8BeNgNZlmUnaawbIAdgCwzIPlpfl9a698CcwoSQSHKsfoixMsY1C3xv0m4WxsdwAAAZekA3j5AAAEAwBHMEUCIBZidGhgwvi6RXm6bUUfBzym5HbRo5fT8Y8PYNKL4MiiAiEAzbzkaO25fD3Q7OIzXlsYsxpERtEi+zGXeCG3Aqc5fuc="
+				}
+			}
+		]
+	},
+	"SignatureAlgorithm": {
+		"Algorithm": "1.2.840.10045.4.3.3",
+		"Parameter": null
+	},
+	"SignatureValue": "MGYCMQCk2fzXpjAP7tA0hBd4i/mGAMAWyJo+UfrlQ6GPXE++WSV0+jRmtWOAb+0nd11f4ugCMQDsbNCnTRzsWhyNMrO0gnm8MRR1ymeneFcADY21AY3zMA4C8E0Cb2KpglybAB7brw8="
+}
