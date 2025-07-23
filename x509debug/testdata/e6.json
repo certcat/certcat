@@ -77,7 +77,11 @@
 			{
 				"ExtnId": "2.5.29.32",
 				"Critical": false,
-				"ExtnValue": "TODO: CertPolicies"
+				"ExtnValue": [
+					{
+						"PolicyIdentifier": "2.23.140.1.2.1"
+					}
+				]
 			},
 			{
 				"ExtnId": "2.5.29.31",

@@ -638,11 +638,113 @@ func ParseKeyUsageExtension(der *cryptobyte.String) ([]KeyUsage, error) {
 	return usages, nil
 }
 
-// ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
-func ParseCertPoliciesExtension(der *cryptobyte.String) (string, error) {
+type PolicyInformation struct {
+	PolicyIdentifier ObjectIdentifier
+	PolicyQualifiers []PolicyQualifierInfo `json:",omitempty"`
+}
 
-	// TODO
-	return "TODO: CertPolicies", nil
+type PolicyQualifierInfo struct {
+	PolicyQualifierID ObjectIdentifier
+	Qualifier         string // TODO: structured representation
+}
+
+// ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
+func ParseCertPoliciesExtension(der *cryptobyte.String) ([]PolicyInformation, error) {
+	var certPolicies cryptobyte.String
+	if !der.ReadASN1(&certPolicies, asn1.SEQUENCE) {
+		return nil, errors.New("failed to read certificate policies")
+	}
+
+	var policies []PolicyInformation
+
+	for !certPolicies.Empty() {
+		var certPolicy cryptobyte.String
+		if !certPolicies.ReadASN1(&certPolicy, asn1.SEQUENCE) {
+			return nil, errors.New("failed to read certificate policy")
+		}
+
+		oid, err := ParseObjectIdentifier(&certPolicy)
+		if err != nil {
+			return nil, err
+		}
+
+		var policyQualifiers []PolicyQualifierInfo
+		if !certPolicy.Empty() {
+			var qualifiers cryptobyte.String
+			if !certPolicy.ReadASN1(&qualifiers, asn1.SEQUENCE) {
+				return nil, errors.New("failed to read certificate qualifiers sequence")
+			}
+
+			for !qualifiers.Empty() {
+				q, err := ParseCertPolicyQualifierInfo(&qualifiers)
+				if err != nil {
+					return nil, err
+				}
+				policyQualifiers = append(policyQualifiers, q)
+			}
+		}
+
+		policies = append(policies, PolicyInformation{
+			PolicyIdentifier: oid,
+			PolicyQualifiers: policyQualifiers,
+		})
+
+	}
+	return policies, nil
+}
+
+func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, error) {
+	var qualifier cryptobyte.String
+	if !der.ReadASN1(&qualifier, asn1.SEQUENCE) {
+		return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier sequence")
+	}
+
+	qoid, err := ParseObjectIdentifier(&qualifier)
+	if err != nil {
+		return PolicyQualifierInfo{}, err
+	}
+
+	var qval string
+
+	switch qoid.String() {
+	case "1.3.6.1.5.5.7.2.1": // id-qt-cps
+		var cpsURI cryptobyte.String
+		if !qualifier.ReadASN1(&cpsURI, asn1.IA5String) {
+			return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier URI")
+		}
+		qval = string(cpsURI)
+	case "1.3.6.1.5.5.7.2.2": // id-qt-unotice
+		var userNotice cryptobyte.String
+		if !qualifier.ReadASN1(&userNotice, asn1.SEQUENCE) {
+			return PolicyQualifierInfo{}, errors.New("failed to read User Notice")
+		}
+
+		var tag asn1.Tag
+		var data cryptobyte.String
+
+		if !userNotice.ReadAnyASN1(&data, &tag) {
+			return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier tag")
+		}
+
+		switch tag {
+		case asn1.SEQUENCE:
+			// TODO: NoticeReference
+			qval = "NoticeReference:" + hex.EncodeToString(data)
+		case asn1.IA5String, asn1.UTF8String, encoding_asn1.TagBMPString:
+			qval, err = parseString(tag, data)
+			if err != nil {
+				return PolicyQualifierInfo{}, err
+			}
+		}
+	default:
+		// Other qualifiers are unsupported
+		qval = hex.EncodeToString(qualifier)
+	}
+
+	return PolicyQualifierInfo{
+		PolicyQualifierID: qoid,
+		Qualifier:         qval,
+	}, nil
 }
 
 // ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
