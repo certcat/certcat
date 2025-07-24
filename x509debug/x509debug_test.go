@@ -21,6 +21,7 @@ func TestCertJSON(t *testing.T) {
 		{"ip6cert"},
 		{"ipcert"},
 		{"isrgrootx1"},
+		{"quovadis2"},
 		{"testcert"},
 		{"wikipedia"},
 	} {

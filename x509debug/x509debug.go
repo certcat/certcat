@@ -489,7 +489,7 @@ func ParseExtension(der *cryptobyte.String) (Extension, error) {
 
 	parsed, err := ParseExtensionValue(extnID, extnValue)
 	if err != nil {
-		return Extension{}, fmt.Errorf("parsing extension value: %w", err)
+		return Extension{}, fmt.Errorf("parsing extension %s value: %w", extnID, err)
 	}
 
 	return Extension{
@@ -565,8 +565,14 @@ type SCTExtension struct {
 	Raw []byte
 }
 
+type AuthorityKeyIdentifier struct {
+	KeyIdentifier             []byte
+	AuthorityCertIssuer       []GeneralName           `json:",omitempty"`
+	AuthorityCertSerialNumber CertificateSerialNumber `json:",omitempty"`
+}
+
 // ParseAKIExtension as described in RFC5280 4.2.1.1
-func ParseAKIExtension(der *cryptobyte.String) ([]byte, error) {
+func ParseAKIExtension(der *cryptobyte.String) (AuthorityKeyIdentifier, error) {
 	//    AuthorityKeyIdentifier ::= SEQUENCE {
 	//      keyIdentifier             [0] KeyIdentifier           OPTIONAL,
 	//      authorityCertIssuer       [1] GeneralNames            OPTIONAL,
@@ -574,25 +580,47 @@ func ParseAKIExtension(der *cryptobyte.String) ([]byte, error) {
 	//    KeyIdentifier ::= OCTET STRING
 	var aki cryptobyte.String
 	if !der.ReadASN1(&aki, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read AKI extension")
+		return AuthorityKeyIdentifier{}, errors.New("failed to read AKI extension")
 	}
 
 	var keyID cryptobyte.String
 	var hasKeyID bool
 	if !aki.ReadOptionalASN1(&keyID, &hasKeyID, asn1.Tag(0).ContextSpecific()) {
-		return nil, errors.New("failed to read AKI extension")
+		return AuthorityKeyIdentifier{}, errors.New("failed to read AKI extension")
 	}
 
-	if !hasKeyID {
-		return nil, errors.New("failed to read AKI extension: No keyIdentifier")
+	var certIssuer cryptobyte.String
+	var hasCertIssuer bool
+	if !aki.ReadOptionalASN1(&certIssuer, &hasCertIssuer, asn1.Tag(1).Constructed().ContextSpecific()) {
+		return AuthorityKeyIdentifier{}, errors.New("failed to read AKI extension: AuthorityCertIssuer")
 	}
 
-	// BRs only permit keyIdentifier
+	var authorityCertIssuer []GeneralName
+	if hasCertIssuer {
+		for !certIssuer.Empty() {
+			name, err := ParseGeneralName(&certIssuer)
+			if err != nil {
+				return AuthorityKeyIdentifier{}, fmt.Errorf("parsing Issuer name: %w", err)
+			}
+			authorityCertIssuer = append(authorityCertIssuer, name)
+		}
+	}
+
+	var serial cryptobyte.String
+	var hasSerial bool
+	if !aki.ReadOptionalASN1(&serial, &hasSerial, asn1.Tag(2).ContextSpecific()) {
+		return AuthorityKeyIdentifier{}, errors.New("failed to read AKI extension: SerialNumber")
+	}
+
 	if !aki.Empty() {
-		return nil, errors.New("failed to read AKI extension: unsupported options")
+		return AuthorityKeyIdentifier{}, errors.New("trailing data after AKI extension")
 	}
 
-	return keyID, nil
+	return AuthorityKeyIdentifier{
+		KeyIdentifier:             keyID,
+		AuthorityCertIssuer:       authorityCertIssuer,
+		AuthorityCertSerialNumber: CertificateSerialNumber(serial),
+	}, nil
 }
 
 // ParseSKIExtension as described in RFC5280 4.2.1.2
@@ -1084,8 +1112,13 @@ func ParseGeneralName(der *cryptobyte.String) (GeneralName, error) {
 	case IPAddress:
 		// Octet String
 		value = net.IP(data).String()
+	case asn1.Tag(DirectoryName).Constructed():
+		rdn, err := ParseRDNSequence(&data)
+		if err != nil {
+			return GeneralName{}, err
+		}
+		value = string(rdn)
 	default:
-		// TODO: Unsupported are just hex encoded
 		value = hex.EncodeToString(data)
 	}
 

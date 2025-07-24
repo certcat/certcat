@@ -1,0 +1,70 @@
+{
+	"TbsCertificate": {
+		"Version": 2,
+		"SerialNumber": "0509",
+		"Signature": {
+			"Algorithm": "1.2.840.113549.1.1.5",
+			"Parameter": null
+		},
+		"Issuer": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2",
+		"Validity": {
+			"NotBefore": {
+				"Tag": 23,
+				"Time": "2006-11-24T18:27:00Z"
+			},
+			"NotAfter": {
+				"Tag": 23,
+				"Time": "2031-11-24T18:23:33Z"
+			}
+		},
+		"Subject": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2",
+		"SubjectPublicKeyInfo": {
+			"Algorithm": {
+				"Algorithm": "1.2.840.113549.1.1.1",
+				"Parameter": null
+			},
+			"SubjectPublicKey": "MIICCgKCAgEAmhjKS5QNAC2vAymK8A+ByK5MGYUdCJ+rKUSF8y+BrTIekEa/o4YmGh7+fhwYOlycYBcqOnSDMzB9YVQRy+2r4ObSon71a28YtwoLLf3pPu8KxrMQ6dzCRhf4Xf2k2v+eSVqc5jPmJJb3P7pbKxx6NcLWZ/6rZlCLbShgK+/XYMPHk7yNNpHzf/jbERPEnHd2wa63AmqBeqlFg+IF5rlWwZQ3j0hxYyLsF2UHlYpL34/GWgrlsONfXmsRqwz5hetE6fgEc/Lp/lyYjPVzr2u0fs3UXAIrTDnhspWVLUKH19WzkEO3bBPx3t32xPiJP9F19ZLDkdWKiNCQ7Nxt3onCZXGWiw0D/Zy/Wxasktvq/nl8reuv9xbL280lK+Uf+5qf4lHMOlMMSOYOvcm0dgZS5hEThXJjAwTgBDYrIBkC6HSnH7bJVmbwdSXcZ8EOYWCIsz7RqPyj2h2w0bEjVN9Edm3tQdjBsiK2UxzfNR3coXcqMeQt9eXl28jg/+WA1wtjoP8zoQ+6LBUV6pez0qK1vvKMlh4ajx1spGE3uYZzM9eXlp4jfYKkTIHiodG6Z1+VB6MnEe4WEHu8RUpMsgTSq+/V/QxRzlBqCDH5kdoMj2RcA8M6iyA/bo1nPTrW/n1biMle+8xh3Iszd9NEMjUJYgSSFhDYnidH+zsh4/jrHVsCAwEAAQ=="
+		},
+		"Extensions": [
+			{
+				"ExtnId": "2.5.29.19",
+				"Critical": true,
+				"ExtnValue": {
+					"CA": true
+				}
+			},
+			{
+				"ExtnId": "2.5.29.15",
+				"Critical": false,
+				"ExtnValue": [
+					5,
+					6
+				]
+			},
+			{
+				"ExtnId": "2.5.29.14",
+				"Critical": false,
+				"ExtnValue": "GoRivEhMMyUE1O7Q9gPEGUbRlGs="
+			},
+			{
+				"ExtnId": "2.5.29.35",
+				"Critical": false,
+				"ExtnValue": {
+					"KeyIdentifier": "GoRivEhMMyUE1O7Q9gPEGUbRlGs=",
+					"AuthorityCertIssuer": [
+						{
+							"Tag": 36,
+							"Value": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2"
+						}
+					],
+					"AuthorityCertSerialNumber": "0509"
+				}
+			}
+		]
+	},
+	"SignatureAlgorithm": {
+		"Algorithm": "1.2.840.113549.1.1.5",
+		"Parameter": null
+	},
+	"SignatureValue": "PgoWTZ8GW6iucV0vBS9n5hNFg8Q29vPAJgwNtUdkXfi0cslGpQMYJ1WJeH126pY0gBcg3OeD+I38B7jaX00uZ7KE/dlE/HdQgeZ8tMkNC3JT+HYHB0FHlgz74IImk1WM/iIfYGV8X+cms/cykJhQ1DdxVfaSIXj3lXn6+C0mh2ZWMHemN3gzUhBYrj9hjvJqse8YfkpZY8qNolbVpy+8Vh/POcHi+wqoFSx9TXpjxmyXRDzSb8NKFwr4kNJXohlRpS2XQdoHT6lQ2pCNlEbhPvCU/RAAOPU76EDhtG5WGiDMb1iN7S5Fj9bpkz/nsSzfOtYijNyEuyJv0PjkxjnpBIg8w7rrVXptgJkk9WwB+/iXsJRb6/3Sb/F3aA01ZCOsuFWhA9FNQhnc+HVZVqP5qEl5+K8OuRGgfLdq7TTQtiZiOBqHDPjo/S7TkH8HkSod1n5chYOZsDgIP+le+TUH5Mlibld/p1CV97rIm+aOogHF1ma/eWHzPBzhuYJcXaDD6dhIvRmiERQZbrKGG2g+SDcaiLddll6cx+8nYgjikRlc0vEh3boXQoKXcYFTMamf9n1iv3Lho5MdzIomWgk40M7XDYAWtHilOodMjYql1UaX8iwQubxUIsABUGlDnvSy72347Nrx47Hv35GPVCoLJcEmGcRSEAVl1YIQ6sIxzS4="
+}

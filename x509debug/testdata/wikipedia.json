@@ -29,7 +29,9 @@
 			{
 				"ExtnId": "2.5.29.35",
 				"Critical": false,
-				"ExtnValue": "UOpzidsp+xCPnuUBINTeeZlIg/c="
+				"ExtnValue": {
+					"KeyIdentifier": "UOpzidsp+xCPnuUBINTeeZlIg/c="
+				}
 			},
 			{
 				"ExtnId": "2.5.29.14",

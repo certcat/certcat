@@ -50,7 +50,9 @@
 			{
 				"ExtnId": "2.5.29.35",
 				"Critical": false,
-				"ExtnValue": "oXQaBm1Qt4YtSizBfrSNiElszRY="
+				"ExtnValue": {
+					"KeyIdentifier": "oXQaBm1Qt4YtSizBfrSNiElszRY="
+				}
 			},
 			{
 				"ExtnId": "1.3.6.1.5.5.7.1.1",
