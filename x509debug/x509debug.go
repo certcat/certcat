@@ -544,6 +544,10 @@ func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, erro
 		ret, err = ParseFreshestCRLExtension(&val)
 	case "2.5.29.54":
 		ret, err = ParseInhibitAnyPolicyExtension(&val)
+	case "1.2.840.113533.7.65.0": // 1
+		ret, err = ParseEntrustVersionExtension(&val)
+	case "2.5.29.16": // 1
+		ret, err = ParsePrivateKeyUsagePeriodExtension(&val)
 	default:
 		return UnknownExtension{
 			Raw: val,
@@ -664,6 +668,57 @@ func ParseKeyUsageExtension(der *cryptobyte.String) ([]KeyUsage, error) {
 	}
 
 	return usages, nil
+}
+
+type PrivateKeyUsagePeriod struct {
+	NotBefore *time.Time `json:",omitempty"`
+	NotAfter  *time.Time `json:",omitempty"`
+}
+
+const generalizedTimeFormatStr = "20060102150405Z0700"
+
+// ParsePrivateKeyUsagePeriodExtension as described in RFC3280 (note: Not 5280)
+func ParsePrivateKeyUsagePeriodExtension(der *cryptobyte.String) (PrivateKeyUsagePeriod, error) {
+	// PrivateKeyUsagePeriod ::= SEQUENCE {
+	//     notBefore       [0]     GeneralizedTime OPTIONAL,
+	//     notAfter        [1]     GeneralizedTime OPTIONAL }
+
+	var kup cryptobyte.String
+	if !der.ReadASN1(&kup, asn1.SEQUENCE) {
+		return PrivateKeyUsagePeriod{}, errors.New("failed to read PrivateKeyUsagePeriod extension")
+	}
+
+	var notBefore cryptobyte.String
+	var hasNotBefore bool
+	if !kup.ReadOptionalASN1(&notBefore, &hasNotBefore, asn1.Tag(0).ContextSpecific()) {
+		return PrivateKeyUsagePeriod{}, errors.New("failed to read PrivateKeyUsagePeriod extension notBefore")
+	}
+
+	var ret PrivateKeyUsagePeriod
+
+	if hasNotBefore {
+		nb, err := time.Parse(generalizedTimeFormatStr, string(notBefore))
+		if err != nil {
+			return PrivateKeyUsagePeriod{}, fmt.Errorf("parsing notBefore: %w", err)
+		}
+		ret.NotBefore = &nb
+	}
+
+	var notAfter cryptobyte.String
+	var hasNotAfter bool
+	if !kup.ReadOptionalASN1(&notAfter, &hasNotAfter, asn1.Tag(1).ContextSpecific()) {
+		return PrivateKeyUsagePeriod{}, errors.New("failed to read PrivateKeyUsagePeriod extension notAfter")
+	}
+
+	if hasNotAfter {
+		na, err := time.Parse(generalizedTimeFormatStr, string(notAfter))
+		if err != nil {
+			return PrivateKeyUsagePeriod{}, fmt.Errorf("parsing notAfter: %w", err)
+		}
+		ret.NotAfter = &na
+	}
+
+	return ret, nil
 }
 
 type PolicyInformation struct {
@@ -1167,6 +1222,45 @@ func ParseTLSFeatureExtension(der *cryptobyte.String) ([]uint16, error) {
 		features = append(features, feature)
 	}
 	return features, nil
+}
+
+type EntrustVersion struct {
+	Version string
+	Flags   string
+}
+
+// ParseEntrustVersionExtension parses a somewhat-unknown extension
+func ParseEntrustVersionExtension(der *cryptobyte.String) (EntrustVersion, error) {
+	var entrustVersion cryptobyte.String
+	if !der.ReadASN1(&entrustVersion, asn1.SEQUENCE) {
+		return EntrustVersion{}, errors.New("failed to read EntrustVersion extension")
+	}
+
+	var ver cryptobyte.String
+	if !entrustVersion.ReadASN1(&ver, asn1.GeneralString) {
+		return EntrustVersion{}, errors.New("failed to read EntrustVersion extension version")
+	}
+
+	var flags encoding_asn1.BitString
+	if !entrustVersion.ReadASN1BitString(&flags) {
+		return EntrustVersion{}, errors.New("failed to read EntrustVersion extension flags")
+	}
+
+	var flagString string
+
+	// We don't really know what this field mean, so just turn them into a binary string.
+	for i := range flags.BitLength {
+		if flags.At(i) != 0 {
+			flagString = "1" + flagString
+		} else {
+			flagString = "0" + flagString
+		}
+	}
+
+	return EntrustVersion{
+		Version: string(ver),
+		Flags:   flagString,
+	}, nil
 }
 
 const (

@@ -1,0 +1,79 @@
+{
+	"TbsCertificate": {
+		"Version": 2,
+		"SerialNumber": "456b5054",
+		"Signature": {
+			"Algorithm": "1.2.840.113549.1.1.5",
+			"Parameter": null
+		},
+		"Issuer": "C=US,O=Entrust, Inc.,OU=www.entrust.net/CPS is incorporated by reference,OU=(c) 2006 Entrust, Inc.,CN=Entrust Root Certification Authority",
+		"Validity": {
+			"NotBefore": {
+				"Tag": 23,
+				"Time": "2006-11-27T20:23:42Z"
+			},
+			"NotAfter": {
+				"Tag": 23,
+				"Time": "2026-11-27T20:53:42Z"
+			}
+		},
+		"Subject": "C=US,O=Entrust, Inc.,OU=www.entrust.net/CPS is incorporated by reference,OU=(c) 2006 Entrust, Inc.,CN=Entrust Root Certification Authority",
+		"SubjectPublicKeyInfo": {
+			"Algorithm": {
+				"Algorithm": "1.2.840.113549.1.1.1",
+				"Parameter": null
+			},
+			"SubjectPublicKey": "MIIBCgKCAQEAtpW2Q0L6xm0qb0jflEw5VwXuw3kRQWg27ez+mgGPoTgo/PcQRmYuTR4asRpOxtHAlYiwyf8xizMD27eDez4ghF7tslYop/jguUBxN8XLRw6XKmjAIpViFdtH2fXQK/+CS8mtPt5M25CAUD8JioQA7DAKPRjN+/0qWZojlRcsRZ4fbkN5bQxcmP5Ip8UjR1xe/W7nHrT2aEXRhoNbooqNseMpgP4lcYitvryPrFKWS6pRjeQTMRnoTk2f26yzatW8OVRxynp6f5DdfR2A2YG7WSbCEf7mk+L3gORl+zQ3DimAcE2vOIYunn9Xr54XruscyyghX7Yc2OeiBCL509rYywIDAQAB"
+		},
+		"Extensions": [
+			{
+				"ExtnId": "2.5.29.15",
+				"Critical": true,
+				"ExtnValue": [
+					5,
+					6
+				]
+			},
+			{
+				"ExtnId": "2.5.29.19",
+				"Critical": true,
+				"ExtnValue": {
+					"CA": true
+				}
+			},
+			{
+				"ExtnId": "2.5.29.16",
+				"Critical": false,
+				"ExtnValue": {
+					"NotBefore": "2006-11-27T20:23:42Z",
+					"NotAfter": "2026-11-27T20:53:42Z"
+				}
+			},
+			{
+				"ExtnId": "2.5.29.35",
+				"Critical": false,
+				"ExtnValue": {
+					"KeyIdentifier": "aJDkZ6SmU4DHhmak8fdLQ/uEvW0="
+				}
+			},
+			{
+				"ExtnId": "2.5.29.14",
+				"Critical": false,
+				"ExtnValue": "aJDkZ6SmU4DHhmak8fdLQ/uEvW0="
+			},
+			{
+				"ExtnId": "1.2.840.113533.7.65.0",
+				"Critical": false,
+				"ExtnValue": {
+					"Version": "V7.1:4.0",
+					"Flags": "1001"
+				}
+			}
+		]
+	},
+	"SignatureAlgorithm": {
+		"Algorithm": "1.2.840.113549.1.1.5",
+		"Parameter": null
+	},
+	"SignatureValue": "k9QwsNcDICrQ+WPokQwFIKlfGcp7ck7UsdvQlvtUWhksDAj3sryFqJ1/bTtSsyrb59SEjGP2D8smAZFQbPRfFOKTdMATnjA6UOO0YMUc8CJEjXFHrMgayembmgBgE/9wfl8RTUkbsxVSe8lU2r+dla9rmtie6fHkQ43iEUQ6v6+9g0JzUouqu6cpz/VkHApN0byqrJ8q0P9/f9p96rHtMCXBhNo00lt4g1bsnDbDJuIR9mdJHZKrjPvr/3ruhUqnUIDwp1xKlC5fBZk8UkHgzbRjzwFDupyD3I9gO/NatLR7rtoLkDh174EdZtL3V3A2s7/8KK9xJYVbE/4ef1q0PA=="
+}

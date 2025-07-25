@@ -19,6 +19,7 @@ func TestCertJSON(t *testing.T) {
 	}{
 		{"anypolicy"},
 		{"e6"},
+		{"entrust"},
 		{"ip6cert"},
 		{"ipcert"},
 		{"isrgrootx1"},
