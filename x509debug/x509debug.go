@@ -249,7 +249,7 @@ func RDNString(atv AttributeTypeAndValue) string {
 	if !ok {
 		name = atv.Type.String()
 	}
-	if atv.Tag == asn1.PrintableString || atv.Tag == asn1.UTF8String {
+	if atv.Tag == asn1.PrintableString || atv.Tag == asn1.UTF8String || atv.Tag == asn1.IA5String {
 		return name + "=" + string(atv.Value)
 	}
 
@@ -598,7 +598,7 @@ func ParseAKIExtension(der *cryptobyte.String) (AuthorityKeyIdentifier, error) {
 	var authorityCertIssuer []GeneralName
 	if hasCertIssuer {
 		for !certIssuer.Empty() {
-			name, err := ParseGeneralName(&certIssuer)
+			name, err := ParseGeneralName(&certIssuer, false)
 			if err != nil {
 				return AuthorityKeyIdentifier{}, fmt.Errorf("parsing Issuer name: %w", err)
 			}
@@ -792,7 +792,7 @@ func ParseSANExtension(der *cryptobyte.String) ([]GeneralName, error) {
 	var ret []GeneralName
 
 	for !sans.Empty() {
-		name, err := ParseGeneralName(&sans)
+		name, err := ParseGeneralName(&sans, false)
 		if err != nil {
 			return nil, fmt.Errorf("parsing SAN: %w", err)
 		}
@@ -855,11 +855,74 @@ func ParseBasicConstraintsExtension(der *cryptobyte.String) (BasicConstraints, e
 	}, nil
 }
 
-// ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
-func ParseNameConstraintsExtension(der *cryptobyte.String) (string, error) {
+type NameConstraints struct {
+	PermittedSubtrees []GeneralName `json:",omitempty"`
+	ExcludedSubtrees  []GeneralName `json:",omitempty"`
+}
 
-	// TODO
-	return "TODO: NameConstraints", nil
+func ParseGeneralSubtrees(der *cryptobyte.String) ([]GeneralName, error) {
+	// GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
+	// GeneralSubtree ::= SEQUENCE {
+	//     base                    GeneralName,
+	//     minimum         [0]     BaseDistance DEFAULT 0,
+	//     maximum         [1]     BaseDistance OPTIONAL }
+	//
+	//  BaseDistance ::= INTEGER (0..MAX)
+	// Because RFC5280 says minimum and maximum can't be present, we don't support them.
+	var ret []GeneralName
+
+	for !der.Empty() {
+		var subtree cryptobyte.String
+		if !der.ReadASN1(&subtree, asn1.SEQUENCE) {
+			return nil, errors.New("failed to parse general subtrees")
+		}
+
+		name, err := ParseGeneralName(&subtree, true)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, name)
+	}
+
+	return ret, nil
+}
+
+// ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
+func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, error) {
+	// NameConstraints ::= SEQUENCE {
+	//     permittedSubtrees       [0]     GeneralSubtrees OPTIONAL,
+	//     excludedSubtrees        [1]     GeneralSubtrees OPTIONAL }
+	var nc cryptobyte.String
+	if !der.ReadASN1(&nc, asn1.SEQUENCE) {
+		return NameConstraints{}, errors.New("failed to parse name constraints extension")
+	}
+
+	var permitted cryptobyte.String
+	var hasPermitted bool
+	if !nc.ReadOptionalASN1(&permitted, &hasPermitted, asn1.Tag(0).Constructed().ContextSpecific()) {
+		return NameConstraints{}, errors.New("failed to parse name constraints extension: permitted subtrees")
+	}
+
+	permittedSubtrees, err := ParseGeneralSubtrees(&permitted)
+	if err != nil {
+		return NameConstraints{}, err
+	}
+
+	var excluded cryptobyte.String
+	var hasExcludedSubtrees bool
+	if !nc.ReadOptionalASN1(&excluded, &hasExcludedSubtrees, asn1.Tag(1).Constructed().ContextSpecific()) {
+		return NameConstraints{}, errors.New("failed to parse name constraints extension: excluded subtrees")
+	}
+
+	excludedSubtrees, err := ParseGeneralSubtrees(&excluded)
+	if err != nil {
+		return NameConstraints{}, err
+	}
+
+	return NameConstraints{
+		PermittedSubtrees: permittedSubtrees,
+		ExcludedSubtrees:  excludedSubtrees,
+	}, nil
 }
 
 // ParsePolicyConstraintsExtension as described in RFC5280 4.2.11.11
@@ -940,7 +1003,7 @@ func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
 			return nil, errors.New("failed to read FullName")
 		}
 
-		gn, err := ParseGeneralName(&fullName)
+		gn, err := ParseGeneralName(&fullName, false)
 		if err != nil {
 			return nil, err
 		}
@@ -957,10 +1020,12 @@ func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
 }
 
 // ParseInhibitAnyPolicyExtension as described in RFC5280 4.2.1.14
-func ParseInhibitAnyPolicyExtension(der *cryptobyte.String) (string, error) {
-
-	// TODO
-	return "TODO: InhibitAnyPolicy", nil
+func ParseInhibitAnyPolicyExtension(der *cryptobyte.String) (uint, error) {
+	var skipCerts uint
+	if !der.ReadASN1Integer(&skipCerts) {
+		return 0, errors.New("failed to parse inhibit any policy extension")
+	}
+	return skipCerts, nil
 }
 
 // ParseFreshestCRLExtension as described in RFC5280 4.2.1.15
@@ -998,7 +1063,7 @@ func ParseAIAExtension(der *cryptobyte.String) ([]AccessDescription, error) {
 			return nil, fmt.Errorf("parsing AccessMethod: %w", err)
 		}
 
-		accessLocation, err := ParseGeneralName(&accessDescription)
+		accessLocation, err := ParseGeneralName(&accessDescription, false)
 		if err != nil {
 			return nil, fmt.Errorf("parsing AccessLocation: %w", err)
 		}
@@ -1093,7 +1158,7 @@ type GeneralName struct {
 // ParseGeneralName parses a GeneralName as defined in RFC5280 4.2.1.6
 // Tag is the context-sensitive tag from the GeneralName CHOICE, and the constants above.
 // TODO: Is a string the best way to represent these names?
-func ParseGeneralName(der *cryptobyte.String) (GeneralName, error) {
+func ParseGeneralName(der *cryptobyte.String, useIPCIDR bool) (GeneralName, error) {
 	var data cryptobyte.String
 	var tag asn1.Tag
 	if !der.ReadAnyASN1(&data, &tag) {
@@ -1110,8 +1175,23 @@ func ParseGeneralName(der *cryptobyte.String) (GeneralName, error) {
 		// IA5String
 		value = string(data)
 	case IPAddress:
-		// Octet String
-		value = net.IP(data).String()
+		if useIPCIDR {
+			if len(data) != net.IPv4len*2 && len(data) != net.IPv6len*2 {
+				return GeneralName{}, fmt.Errorf("invalid IP address and mask length: %d", len(data))
+			}
+			// In name constraints, IP Address names have a mask included
+			ipnet := net.IPNet{
+				IP:   net.IP(data[len(data)/2:]),
+				Mask: net.IPMask(data[:len(data)/2]),
+			}
+			value = ipnet.String()
+		} else {
+			if len(data) != net.IPv4len && len(data) != net.IPv6len {
+				return GeneralName{}, fmt.Errorf("wrong length of IP address: %d", len(data))
+			}
+			// Octet String
+			value = net.IP(data).String()
+		}
 	case asn1.Tag(DirectoryName).Constructed():
 		rdn, err := ParseRDNSequence(&data)
 		if err != nil {

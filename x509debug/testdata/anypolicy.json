@@ -1,0 +1,144 @@
+{
+	"TbsCertificate": {
+		"Version": 2,
+		"SerialNumber": "9894f9ba5687651ce311517fc18cf720",
+		"Signature": {
+			"Algorithm": "1.2.840.113549.1.1.11",
+			"Parameter": null
+		},
+		"Issuer": "O=Digital Signature Trust Co.,CN=DST Root CA X3",
+		"Validity": {
+			"NotBefore": {
+				"Tag": 23,
+				"Time": "2015-10-14T23:17:01Z"
+			},
+			"NotAfter": {
+				"Tag": 23,
+				"Time": "2020-10-14T23:17:01Z"
+			}
+		},
+		"Subject": "C=US,O=Let's Encrypt,CN=Let's Encrypt Authority X1",
+		"SubjectPublicKeyInfo": {
+			"Algorithm": {
+				"Algorithm": "1.2.840.113549.1.1.1",
+				"Parameter": null
+			},
+			"SubjectPublicKey": "MIIBCgKCAQEAnNMM8FrlLke3cl03g7NoYzDq1zUmGSXhvb418XCSL7e4S0EFq6meNQhY7LEqxGiHC6PjdeTm86dicbp5gWAf15Gan/PQeGdxyGkOlZHP/uaZ6WA8SMx+yk13EiSdRxta67nsHjcAHJyse6cF6s5K671B5TaYucv9bTyWaN8jKkKQDIZ0Z8h/pZq4UmEUEz9l6YKHy9v6Dlb2honzhT+Xhq+w3Brvaw2VFn3EK6BlspkENnWAa6xK8xuQSXgvopZPKiAlKQTGdMDQMc2PMTiVFrqoM7hD8bEfwzB/onkxEz0tNvjj/PIzark5McWvxI0NHWQWM6r6hCm21AvA2H3DkwIDAQAB"
+		},
+		"Extensions": [
+			{
+				"ExtnId": "2.5.29.19",
+				"Critical": true,
+				"ExtnValue": {
+					"CA": true,
+					"PathLengthConstraint": 0
+				}
+			},
+			{
+				"ExtnId": "2.5.29.30",
+				"Critical": true,
+				"ExtnValue": {
+					"ExcludedSubtrees": [
+						{
+							"Tag": 36,
+							"Value": "DC=mil"
+						},
+						{
+							"Tag": 36,
+							"Value": "C=US,O=U.S. Government"
+						},
+						{
+							"Tag": 7,
+							"Value": "0.0.0.0/0"
+						},
+						{
+							"Tag": 7,
+							"Value": "::/0"
+						}
+					]
+				}
+			},
+			{
+				"ExtnId": "2.5.29.15",
+				"Critical": true,
+				"ExtnValue": [
+					0,
+					5,
+					6
+				]
+			},
+			{
+				"ExtnId": "2.5.29.54",
+				"Critical": true,
+				"ExtnValue": 0
+			},
+			{
+				"ExtnId": "1.3.6.1.5.5.7.1.1",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"AccessMethod": "1.3.6.1.5.5.7.48.1",
+						"AccessLocation": {
+							"Tag": 6,
+							"Value": "http://isrg.trustid.ocsp.identrust.com"
+						}
+					},
+					{
+						"AccessMethod": "1.3.6.1.5.5.7.48.2",
+						"AccessLocation": {
+							"Tag": 6,
+							"Value": "http://apps.identrust.com/roots/dstrootcax3.p7c"
+						}
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.35",
+				"Critical": false,
+				"ExtnValue": {
+					"KeyIdentifier": "xKexpHsscfrb4UuQdf/EFWCFiRA="
+				}
+			},
+			{
+				"ExtnId": "2.5.29.32",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"PolicyIdentifier": "2.23.140.1.2.1"
+					},
+					{
+						"PolicyIdentifier": "1.3.6.1.4.1.44947.1.1.1",
+						"PolicyQualifiers": [
+							{
+								"PolicyQualifierID": "1.3.6.1.5.5.7.2.1",
+								"Qualifier": "http://cps.root-x1.letsencrypt.org"
+							}
+						]
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.31",
+				"Critical": false,
+				"ExtnValue": [
+					{
+						"DistributionPointName": {
+							"Tag": 6,
+							"Value": "http://crl.identrust.com/DSTROOTCAX3CRL.crl"
+						}
+					}
+				]
+			},
+			{
+				"ExtnId": "2.5.29.14",
+				"Critical": false,
+				"ExtnValue": "qEpqYwR93brm0Tm3pkVl7/Oo7KE="
+			}
+		]
+	},
+	"SignatureAlgorithm": {
+		"Algorithm": "1.2.840.113549.1.1.11",
+		"Parameter": null
+	},
+	"SignatureValue": "Ry70S2v4Nv3SXKRHt20QS3RHBfQtGIWh6T2UgNdk5LnGYudvjM0APRenkzk8EONbH06Qu+JIDQ7jpVa2m+miN+8MS+p1YDMIwCmGqCYH8Zga6P+yvQBEbo16Qh7KdIZaJraYRS+iJf8BAX61sEgb8Eafo552V7LtFHir3WDYu2Xwhjj4wSZ8gBeN4U1HcahR8y+Gez6We6l2HAOXOUi5AEMmdtYlm4SU+LPQcHi6MgO7BgNW2dL9LRDcWNVJRkedEszTo0lgbP0XtfvQ92M7C14LLOL5VaKNu9hq/QrE+Sgk99ucwxfi/+ORoS11/RrH78FdbwUGRKoh/2h9IsBoFg=="
+}

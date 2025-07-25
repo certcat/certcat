@@ -17,11 +17,14 @@ func TestCertJSON(t *testing.T) {
 	for _, tc := range []struct {
 		name string
 	}{
+		{"anypolicy"},
 		{"e6"},
 		{"ip6cert"},
 		{"ipcert"},
 		{"isrgrootx1"},
+		{"permittednames"},
 		{"quovadis2"},
+		{"rtx"},
 		{"testcert"},
 		{"wikipedia"},
 	} {
