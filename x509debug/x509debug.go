@@ -1137,7 +1137,8 @@ type PrecertificatePoisonExtension struct{}
 
 // ParsePrecertificatePoisonExtension as described in RFC6962 3.1
 func ParsePrecertificatePoisonExtension(der *cryptobyte.String) (PrecertificatePoisonExtension, error) {
-	if !der.ReadASN1(nil, asn1.NULL) {
+	var poison cryptobyte.String
+	if !der.ReadASN1(&poison, asn1.NULL) {
 		return PrecertificatePoisonExtension{}, errors.New("failed to read precertificate poison extension")
 	}
 

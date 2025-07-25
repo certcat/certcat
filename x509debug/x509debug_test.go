@@ -23,6 +23,7 @@ func TestCertJSON(t *testing.T) {
 		{"ipcert"},
 		{"isrgrootx1"},
 		{"permittednames"},
+		{"precert"},
 		{"quovadis2"},
 		{"rtx"},
 		{"testcert"},
