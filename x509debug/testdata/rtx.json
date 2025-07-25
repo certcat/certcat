@@ -49,7 +49,44 @@
 			{
 				"ExtnId": "2.5.29.33",
 				"Critical": false,
-				"ExtnValue": "TODO: PolicyMappings"
+				"ExtnValue": [
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.13",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.1"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.12",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.2"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.15",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.4"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.14",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.5"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.19",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.23"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.18",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.24"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.13",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.2"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.15",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.5"
+					},
+					{
+						"IssuerDomainPolicy": "1.3.6.1.4.1.26769.10.1.19",
+						"SubjectDomainPolicy": "1.3.6.1.4.1.24019.1.1.1.24"
+					}
+				]
 			},
 			{
 				"ExtnId": "2.5.29.32",

@@ -775,11 +775,41 @@ func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, 
 	}, nil
 }
 
-// ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
-func ParsePolicyMappingsExtension(der *cryptobyte.String) (string, error) {
+type PolicyMap struct {
+	IssuerDomainPolicy  ObjectIdentifier
+	SubjectDomainPolicy ObjectIdentifier
+}
 
-	// TODO
-	return "TODO: PolicyMappings", nil
+// ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
+func ParsePolicyMappingsExtension(der *cryptobyte.String) ([]PolicyMap, error) {
+	var policyMaps cryptobyte.String
+	if !der.ReadASN1(&policyMaps, asn1.SEQUENCE) {
+		return nil, errors.New("failed to read policy mappings")
+	}
+
+	var ret []PolicyMap
+
+	for !policyMaps.Empty() {
+		var policyMap cryptobyte.String
+		if !policyMaps.ReadASN1(&policyMap, asn1.SEQUENCE) {
+			return nil, errors.New("failed to read policy mapping")
+		}
+		issuerOID, err := ParseObjectIdentifier(&policyMap)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse issuer OID: %w", err)
+		}
+		subjectOID, err := ParseObjectIdentifier(&policyMap)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse subject OID: %w", err)
+		}
+
+		ret = append(ret, PolicyMap{
+			IssuerDomainPolicy:  issuerOID,
+			SubjectDomainPolicy: subjectOID,
+		})
+	}
+
+	return ret, nil
 }
 
 // ParseSANExtension as described in RFC5280 4.2.1.6
