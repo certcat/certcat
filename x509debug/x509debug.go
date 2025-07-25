@@ -510,20 +510,14 @@ func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, erro
 		ret, err = ParsePrecertificatePoisonExtension(&val)
 	case "1.3.6.1.5.5.7.1.1":
 		ret, err = ParseAIAExtension(&val)
-	case "1.3.6.1.5.5.7.1.11":
-		ret, err = ParseSIAExtension(&val)
 	case "1.3.6.1.5.5.7.1.24":
 		ret, err = ParseTLSFeatureExtension(&val)
-	case "2.5.29.9":
-		ret, err = ParseSDAExtension(&val)
 	case "2.5.29.14":
 		ret, err = ParseSKIExtension(&val)
 	case "2.5.29.15":
 		ret, err = ParseKeyUsageExtension(&val)
 	case "2.5.29.17":
 		ret, err = ParseSANExtension(&val)
-	case "2.5.29.18":
-		ret, err = ParseIANExtension(&val)
 	case "2.5.29.19":
 		ret, err = ParseBasicConstraintsExtension(&val)
 	case "2.5.29.30":
@@ -536,12 +530,8 @@ func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, erro
 		ret, err = ParsePolicyMappingsExtension(&val)
 	case "2.5.29.35":
 		ret, err = ParseAKIExtension(&val)
-	case "2.5.29.36":
-		ret, err = ParsePolicyConstraintsExtension(&val)
 	case "2.5.29.37":
 		ret, err = ParseExtKeyUsageExtension(&val)
-	case "2.5.29.46":
-		ret, err = ParseFreshestCRLExtension(&val)
 	case "2.5.29.54":
 		ret, err = ParseInhibitAnyPolicyExtension(&val)
 	case "1.2.840.113533.7.65.0": // 1
@@ -549,20 +539,21 @@ func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, erro
 	case "2.5.29.16": // 1
 		ret, err = ParsePrivateKeyUsagePeriodExtension(&val)
 	default:
-		return UnknownExtension{
-			Raw: val,
-		}, err
+		ret = UnknownExtension{
+			Unknown: val,
+		}
+		val.Skip(len(val))
 	}
 
-	//if !val.Empty() {
-	//	return nil, fmt.Errorf("Data after extension %s: %s", oid.String(), hex.EncodeToString(val))
-	//}
+	if !val.Empty() {
+		return nil, fmt.Errorf("data after extension %s: %s", oid.String(), hex.EncodeToString(val))
+	}
 
 	return ret, err
 }
 
 type UnknownExtension struct {
-	Raw []byte
+	Unknown []byte
 }
 
 type SCTExtension struct {
@@ -888,18 +879,6 @@ func ParseSANExtension(der *cryptobyte.String) ([]GeneralName, error) {
 	return ret, nil
 }
 
-// ParseIANExtension as described in RFC5280 4.2.1.7
-func ParseIANExtension(der *cryptobyte.String) ([]GeneralName, error) {
-	return ParseSANExtension(der)
-}
-
-// ParseSDAExtension as described in RFC5280 4.2.1.8
-func ParseSDAExtension(der *cryptobyte.String) (string, error) {
-
-	// TODO
-	return "TODO: SDA", nil
-}
-
 type BasicConstraints struct {
 	CA                   bool
 	PathLengthConstraint *int `json:",omitempty"`
@@ -1010,13 +989,6 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 	}, nil
 }
 
-// ParsePolicyConstraintsExtension as described in RFC5280 4.2.11.11
-func ParsePolicyConstraintsExtension(der *cryptobyte.String) (string, error) {
-
-	// TODO
-	return "TODO: PolicyConstraints", nil
-}
-
 // ParseExtKeyUsageExtension as described in RFC5280 4.2.1.12
 func ParseExtKeyUsageExtension(der *cryptobyte.String) ([]ObjectIdentifier, error) {
 	//  KeyPurposeId ::= OBJECT IDENTIFIER
@@ -1113,13 +1085,6 @@ func ParseInhibitAnyPolicyExtension(der *cryptobyte.String) (uint, error) {
 	return skipCerts, nil
 }
 
-// ParseFreshestCRLExtension as described in RFC5280 4.2.1.15
-func ParseFreshestCRLExtension(der *cryptobyte.String) (string, error) {
-
-	// TODO
-	return "TODO: FreshestCRL", nil
-}
-
 //	AccessDescription  ::=  SEQUENCE {
 //	  accessMethod   OBJECT IDENTIFIER,
 //	  accessLocation GeneralName  }
@@ -1160,12 +1125,6 @@ func ParseAIAExtension(der *cryptobyte.String) ([]AccessDescription, error) {
 	}
 
 	return accessDescriptions, nil
-}
-
-// ParseSIAExtension as described in RFC5280 4.2.2.2
-func ParseSIAExtension(der *cryptobyte.String) ([]AccessDescription, error) {
-	// Same as AIA:
-	return ParseAIAExtension(der)
 }
 
 // ParseSCTExtension as described in RFC6962 3.3
