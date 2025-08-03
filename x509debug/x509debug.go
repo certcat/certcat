@@ -431,23 +431,11 @@ func ParseExtensions(der *cryptobyte.String) (Extensions, error) {
 		return nil, errors.New("failed to read Extensions")
 	}
 
-	var parsedExtensions Extensions
-
 	if hasExtensions {
-		if !extensions.ReadASN1(&extensions, asn1.SEQUENCE) {
-			return nil, errors.New("failed to read Extensions")
-		}
-
-		for !extensions.Empty() {
-			ext, err := ParseExtension(&extensions)
-			if err != nil {
-				return nil, fmt.Errorf("parsing extensions: %w", err)
-			}
-			parsedExtensions = append(parsedExtensions, ext)
-		}
+		return ParseSequenceOf[Extension, *Extension](&extensions, asn1.SEQUENCE)
 	}
 
-	return parsedExtensions, nil
+	return nil, nil
 }
 
 //	Extension  ::=  SEQUENCE  {
@@ -464,39 +452,39 @@ type Extension struct {
 	ExtnValue any // TBD interface?
 }
 
-func ParseExtension(der *cryptobyte.String) (Extension, error) {
+func (e *Extension) Parse(der *cryptobyte.String) error {
 	var extension cryptobyte.String
 	if !der.ReadASN1(&extension, asn1.SEQUENCE) {
-		return Extension{}, errors.New("failed to read Extension")
+		return errors.New("failed to read Extension")
 	}
 
 	extnID, err := ParseObjectIdentifier(&extension)
 	if err != nil {
-		return Extension{}, fmt.Errorf("parsing Extension OID: %w", err)
+		return fmt.Errorf("parsing Extension OID: %w", err)
 	}
 
 	critical := false
 	if extension.PeekASN1Tag(asn1.BOOLEAN) {
 		if !extension.ReadASN1Boolean(&critical) {
-			return Extension{}, errors.New("failed to read critical bit")
+			return errors.New("failed to read critical bit")
 		}
 	}
 
 	var extnValue cryptobyte.String
 	if !extension.ReadASN1(&extnValue, asn1.OCTET_STRING) {
-		return Extension{}, errors.New("failed to read extension value")
+		return errors.New("failed to read extension value")
 	}
 
 	parsed, err := ParseExtensionValue(extnID, extnValue)
 	if err != nil {
-		return Extension{}, fmt.Errorf("parsing extension %s value: %w", extnID, err)
+		return fmt.Errorf("parsing extension %s value: %w", extnID, err)
 	}
 
-	return Extension{
-		ExtnId:    extnID,
-		Critical:  critical,
-		ExtnValue: parsed,
-	}, nil
+	e.ExtnId = extnID
+	e.Critical = critical
+	e.ExtnValue = parsed
+
+	return nil
 }
 
 func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, error) {
