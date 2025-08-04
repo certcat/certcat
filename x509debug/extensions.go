@@ -728,28 +728,23 @@ func ParsePrecertificatePoisonExtension(der *cryptobyte.String) (PrecertificateP
 	return PrecertificatePoisonExtension{}, nil
 }
 
+// TLSFeature is a TLS Feature, which is defined as being 16-bit in TLS.
+type TLSFeature uint16
+
+func (t *TLSFeature) Parse(der *cryptobyte.String) error {
+	var feature uint16
+	if !der.ReadASN1Integer(&feature) {
+		return errors.New("failed to parse TLS Feature extension")
+	}
+	*t = TLSFeature(feature)
+	return nil
+}
+
 // ParseTLSFeatureExtension as described in RFC7633
 // This is used for OCSP must-staple, though theoretically could be used for other reasons.
-func ParseTLSFeatureExtension(der *cryptobyte.String) ([]uint16, error) {
-	// The ASN.1 module in RFC 7633 is just
+func ParseTLSFeatureExtension(der *cryptobyte.String) ([]TLSFeature, error) {
 	//    Features ::= SEQUENCE OF INTEGER
-	// On the TLS side, though, they're defined as being 16-bit, so we use a uint16 here.
-
-	var featureSequence cryptobyte.String
-	if !der.ReadASN1(&featureSequence, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read TLS feature extension")
-	}
-
-	var features []uint16
-
-	for !featureSequence.Empty() {
-		var feature uint16
-		if !featureSequence.ReadASN1Integer(&feature) {
-			return nil, errors.New("failed to read TLS Feature Extension")
-		}
-		features = append(features, feature)
-	}
-	return features, nil
+	return ParseSequenceOf[TLSFeature](der, asn1.SEQUENCE)
 }
 
 type EntrustVersion struct {
