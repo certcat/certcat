@@ -334,19 +334,9 @@ type Validity struct {
 }
 
 func ParseValidity(der *cryptobyte.String) (Validity, error) {
-	var validity cryptobyte.String
-	if !der.ReadASN1(&validity, asn1.SEQUENCE) {
-		return Validity{}, errors.New("failed to read Validity")
-	}
-
-	notBefore, err := ParseTime(&validity)
+	notBefore, notAfter, err := ParseSequence2[Time, Time](der)
 	if err != nil {
-		return Validity{}, fmt.Errorf("parsing NotBefore: %w", err)
-	}
-
-	notAfter, err := ParseTime(&validity)
-	if err != nil {
-		return Validity{}, fmt.Errorf("parsing NotAfter: %w", err)
+		return Validity{}, err
 	}
 
 	return Validity{
@@ -363,21 +353,24 @@ type Time struct {
 	Time time.Time
 }
 
-func ParseTime(der *cryptobyte.String) (Time, error) {
-	var t time.Time
+func (t *Time) Parse(der *cryptobyte.String) error {
 	if der.PeekASN1Tag(asn1.UTCTime) {
-		if !der.ReadASN1UTCTime(&t) {
-			return Time{}, errors.New("failed to parse UTCTime")
+		var utcTime time.Time
+		if !der.ReadASN1UTCTime(&utcTime) {
+			return errors.New("failed to parse UTCTime")
 		}
-		return Time{asn1.UTCTime, t}, nil
+		*t = Time{asn1.UTCTime, utcTime}
+		return nil
 	}
 	if der.PeekASN1Tag(asn1.GeneralizedTime) {
-		if !der.ReadASN1GeneralizedTime(&t) {
-			return Time{}, errors.New("failed to parse GeneralizedTime")
+		var generalizedTime time.Time
+		if !der.ReadASN1GeneralizedTime(&generalizedTime) {
+			return errors.New("failed to parse GeneralizedTime")
 		}
-		return Time{asn1.GeneralizedTime, t}, nil
+		*t = Time{asn1.GeneralizedTime, generalizedTime}
+		return nil
 	}
-	return Time{}, errors.New("failed to parse time")
+	return errors.New("failed to parse time")
 }
 
 //	SubjectPublicKeyInfo  ::=  SEQUENCE  {
