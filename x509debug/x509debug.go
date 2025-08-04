@@ -199,11 +199,20 @@ func ParseObjectIdentifier(der *cryptobyte.String) (ObjectIdentifier, error) {
 	return ObjectIdentifier(oid), nil
 }
 
-func (oid ObjectIdentifier) String() string {
-	return encoding_asn1.ObjectIdentifier(oid).String()
+func (oid *ObjectIdentifier) Parse(der *cryptobyte.String) error {
+	o, err := ParseObjectIdentifier(der)
+	if err != nil {
+		return err
+	}
+	*oid = o
+	return nil
 }
 
-func (oid ObjectIdentifier) MarshalJSON() ([]byte, error) {
+func (oid *ObjectIdentifier) String() string {
+	return encoding_asn1.ObjectIdentifier(*oid).String()
+}
+
+func (oid *ObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return json.Marshal(oid.String())
 }
 

@@ -68,7 +68,7 @@ func (e *Extension) Parse(der *cryptobyte.String) error {
 
 	parsed, err := ParseExtensionValue(extnID, extnValue)
 	if err != nil {
-		return fmt.Errorf("parsing extension %s value: %w", extnID, err)
+		return fmt.Errorf("parsing extension %s value: %w", &extnID, err)
 	}
 
 	e.ExtnId = extnID
@@ -567,23 +567,7 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 func ParseExtKeyUsageExtension(der *cryptobyte.String) ([]ObjectIdentifier, error) {
 	//  KeyPurposeId ::= OBJECT IDENTIFIER
 	//  ExtKeyUsageSyntax ::= SEQUENCE SIZE (1..MAX) OF KeyPurposeId
-
-	var ekus cryptobyte.String
-	if !der.ReadASN1(&ekus, asn1.SEQUENCE) {
-		return nil, errors.New("failed to parse key usage extension")
-	}
-
-	var ret []ObjectIdentifier
-
-	for !ekus.Empty() {
-		ident, err := ParseObjectIdentifier(&ekus)
-		if err != nil {
-			return nil, err
-		}
-		ret = append(ret, ident)
-	}
-
-	return ret, nil
+	return ParseSequenceOf[ObjectIdentifier](der, asn1.SEQUENCE)
 }
 
 type DistributionPoint struct {
