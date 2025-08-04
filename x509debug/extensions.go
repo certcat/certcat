@@ -667,38 +667,29 @@ type AccessDescription struct {
 	AccessLocation GeneralName
 }
 
+func (ad *AccessDescription) Parse(der *cryptobyte.String) error {
+	var accessDescription cryptobyte.String
+	if !der.ReadASN1(&accessDescription, asn1.SEQUENCE) {
+		return errors.New("failed to read AccessDescription")
+	}
+	oid, err := ParseObjectIdentifier(&accessDescription)
+	if err != nil {
+		return fmt.Errorf("parsing AccessMethod: %w", err)
+	}
+
+	accessLocation, err := ParseGeneralName(&accessDescription, false)
+	if err != nil {
+		return fmt.Errorf("parsing AccessLocation: %w", err)
+	}
+
+	ad.AccessMethod = oid
+	ad.AccessLocation = accessLocation
+	return nil
+}
+
 // ParseAIAExtension as described in RFC5280 4.2.2.1
 func ParseAIAExtension(der *cryptobyte.String) ([]AccessDescription, error) {
-	var aia cryptobyte.String
-	if !der.ReadASN1(&aia, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read AIA Extension")
-	}
-
-	var accessDescriptions []AccessDescription
-
-	// AuthorityInfoAccessSyntax ::= SEQUENCE SIZE (1..MAX) OF AccessDescription
-	for !aia.Empty() {
-		var accessDescription cryptobyte.String
-		if !aia.ReadASN1(&accessDescription, asn1.SEQUENCE) {
-			return nil, errors.New("failed to read AIA Extension")
-		}
-		oid, err := ParseObjectIdentifier(&accessDescription)
-		if err != nil {
-			return nil, fmt.Errorf("parsing AccessMethod: %w", err)
-		}
-
-		accessLocation, err := ParseGeneralName(&accessDescription, false)
-		if err != nil {
-			return nil, fmt.Errorf("parsing AccessLocation: %w", err)
-		}
-
-		accessDescriptions = append(accessDescriptions, AccessDescription{
-			AccessMethod:   oid,
-			AccessLocation: accessLocation,
-		})
-	}
-
-	return accessDescriptions, nil
+	return ParseSequenceOf[AccessDescription](der, asn1.SEQUENCE)
 }
 
 type SCTExtension struct {
