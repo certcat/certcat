@@ -7,19 +7,14 @@ import (
 	"golang.org/x/crypto/cryptobyte/asn1"
 )
 
-type Parsable interface {
-	// Parse data into this type
-	Parse(data *cryptobyte.String) error
-}
-
-type ParsablePtr[T any] interface {
+type Parsable[T any] interface {
 	*T
-	Parsable
+	Parse(data *cryptobyte.String) error
 }
 
 // ParseSequenceOf parses an ASN.1 SequenceOf
 // Tag should usually be asn1.Sequence, except when using implicit encoding.
-func ParseSequenceOf[T any, PT ParsablePtr[T]](data *cryptobyte.String, tag asn1.Tag) ([]T, error) {
+func ParseSequenceOf[T any, PT Parsable[T]](data *cryptobyte.String, tag asn1.Tag) ([]T, error) {
 	var sequenceOf cryptobyte.String
 	if !data.ReadASN1(&sequenceOf, tag) {
 		return nil, errors.New("failed to parse ASN.1 sequence")
