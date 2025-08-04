@@ -291,65 +291,53 @@ type PolicyInformation struct {
 	PolicyQualifiers []PolicyQualifierInfo `json:",omitempty"`
 }
 
+type pqis []PolicyQualifierInfo
+
+func (pqis *pqis) Parse(der *cryptobyte.String) error {
+	if der.Empty() {
+		return nil
+	}
+	v, err := ParseSequenceOf[PolicyQualifierInfo](der, asn1.SEQUENCE)
+	if err != nil {
+		return err
+	}
+	*pqis = v
+	return nil
+}
+
+func (pi *PolicyInformation) Parse(der *cryptobyte.String) error {
+	//    PolicyInformation ::= SEQUENCE {
+	//        policyIdentifier   CertPolicyId,
+	//        policyQualifiers   SEQUENCE SIZE (1..MAX) OF
+	//                                PolicyQualifierInfo OPTIONAL }
+	policyIdentifier, policyQualifiers, err := ParseSequence2[ObjectIdentifier, pqis](der)
+	if err != nil {
+		return err
+	}
+	pi.PolicyIdentifier = policyIdentifier
+	pi.PolicyQualifiers = policyQualifiers
+	return nil
+}
+
+// ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
+func ParseCertPoliciesExtension(der *cryptobyte.String) ([]PolicyInformation, error) {
+	return ParseSequenceOf[PolicyInformation](der, asn1.SEQUENCE)
+}
+
 type PolicyQualifierInfo struct {
 	PolicyQualifierID ObjectIdentifier
 	Qualifier         string // TODO: structured representation
 }
 
-// ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
-func ParseCertPoliciesExtension(der *cryptobyte.String) ([]PolicyInformation, error) {
-	var certPolicies cryptobyte.String
-	if !der.ReadASN1(&certPolicies, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read certificate policies")
-	}
-
-	var policies []PolicyInformation
-
-	for !certPolicies.Empty() {
-		var certPolicy cryptobyte.String
-		if !certPolicies.ReadASN1(&certPolicy, asn1.SEQUENCE) {
-			return nil, errors.New("failed to read certificate policy")
-		}
-
-		oid, err := ParseObjectIdentifier(&certPolicy)
-		if err != nil {
-			return nil, err
-		}
-
-		var policyQualifiers []PolicyQualifierInfo
-		if !certPolicy.Empty() {
-			var qualifiers cryptobyte.String
-			if !certPolicy.ReadASN1(&qualifiers, asn1.SEQUENCE) {
-				return nil, errors.New("failed to read certificate qualifiers sequence")
-			}
-
-			for !qualifiers.Empty() {
-				q, err := ParseCertPolicyQualifierInfo(&qualifiers)
-				if err != nil {
-					return nil, err
-				}
-				policyQualifiers = append(policyQualifiers, q)
-			}
-		}
-
-		policies = append(policies, PolicyInformation{
-			PolicyIdentifier: oid,
-			PolicyQualifiers: policyQualifiers,
-		})
-
-	}
-	return policies, nil
-}
-
-func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, error) {
+func (pqi *PolicyQualifierInfo) Parse(der *cryptobyte.String) error {
 	var qualifier cryptobyte.String
 	if !der.ReadASN1(&qualifier, asn1.SEQUENCE) {
-		return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier sequence")
+		return errors.New("failed to read certificate qualifier sequence")
 	}
 
 	qoid, err := ParseObjectIdentifier(&qualifier)
 	if err != nil {
-		return PolicyQualifierInfo{}, err
+		return err
 	}
 
 	var qval string
@@ -358,20 +346,20 @@ func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, 
 	case "1.3.6.1.5.5.7.2.1": // id-qt-cps
 		var cpsURI cryptobyte.String
 		if !qualifier.ReadASN1(&cpsURI, asn1.IA5String) {
-			return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier URI")
+			return errors.New("failed to read certificate qualifier URI")
 		}
 		qval = string(cpsURI)
 	case "1.3.6.1.5.5.7.2.2": // id-qt-unotice
 		var userNotice cryptobyte.String
 		if !qualifier.ReadASN1(&userNotice, asn1.SEQUENCE) {
-			return PolicyQualifierInfo{}, errors.New("failed to read User Notice")
+			return errors.New("failed to read User Notice")
 		}
 
 		var tag asn1.Tag
 		var data cryptobyte.String
 
 		if !userNotice.ReadAnyASN1(&data, &tag) {
-			return PolicyQualifierInfo{}, errors.New("failed to read certificate qualifier tag")
+			return errors.New("failed to read certificate qualifier tag")
 		}
 
 		switch tag {
@@ -381,7 +369,7 @@ func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, 
 		case asn1.IA5String, asn1.UTF8String, encoding_asn1.TagBMPString:
 			qval, err = parseString(tag, data)
 			if err != nil {
-				return PolicyQualifierInfo{}, err
+				return err
 			}
 		}
 	default:
@@ -389,10 +377,9 @@ func ParseCertPolicyQualifierInfo(der *cryptobyte.String) (PolicyQualifierInfo, 
 		qval = hex.EncodeToString(qualifier)
 	}
 
-	return PolicyQualifierInfo{
-		PolicyQualifierID: qoid,
-		Qualifier:         qval,
-	}, nil
+	pqi.PolicyQualifierID = qoid
+	pqi.Qualifier = qval
+	return nil
 }
 
 type PolicyMap struct {
