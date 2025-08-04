@@ -400,36 +400,20 @@ type PolicyMap struct {
 	SubjectDomainPolicy ObjectIdentifier
 }
 
+func (pm *PolicyMap) Parse(der *cryptobyte.String) error {
+	idp, sdp, err := ParseSequence2[ObjectIdentifier, ObjectIdentifier](der)
+	if err != nil {
+		return err
+	}
+
+	pm.IssuerDomainPolicy = idp
+	pm.SubjectDomainPolicy = sdp
+	return nil
+}
+
 // ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
 func ParsePolicyMappingsExtension(der *cryptobyte.String) ([]PolicyMap, error) {
-	var policyMaps cryptobyte.String
-	if !der.ReadASN1(&policyMaps, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read policy mappings")
-	}
-
-	var ret []PolicyMap
-
-	for !policyMaps.Empty() {
-		var policyMap cryptobyte.String
-		if !policyMaps.ReadASN1(&policyMap, asn1.SEQUENCE) {
-			return nil, errors.New("failed to read policy mapping")
-		}
-		issuerOID, err := ParseObjectIdentifier(&policyMap)
-		if err != nil {
-			return nil, fmt.Errorf("failed to parse issuer OID: %w", err)
-		}
-		subjectOID, err := ParseObjectIdentifier(&policyMap)
-		if err != nil {
-			return nil, fmt.Errorf("failed to parse subject OID: %w", err)
-		}
-
-		ret = append(ret, PolicyMap{
-			IssuerDomainPolicy:  issuerOID,
-			SubjectDomainPolicy: subjectOID,
-		})
-	}
-
-	return ret, nil
+	return ParseSequenceOf[PolicyMap](der, asn1.SEQUENCE)
 }
 
 // ParseSANExtension as described in RFC5280 4.2.1.6
