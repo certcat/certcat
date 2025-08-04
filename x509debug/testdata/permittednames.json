@@ -75,468 +75,700 @@
 				"ExtnValue": {
 					"PermittedSubtrees": [
 						{
-							"Tag": 2,
-							"Value": "adbk-nuernberg.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "adbk-nuernberg.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "akdb.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "akdb.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "akdb.doi-de.net"
+							"Base": {
+								"Tag": 2,
+								"Value": "akdb.doi-de.net"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "akdb.net"
+							"Base": {
+								"Tag": 2,
+								"Value": "akdb.net"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "alp-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "alp-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "aufbruch-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "aufbruch-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "aussenwirtschaft-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "aussenwirtschaft-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bafoeg-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bafoeg-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "balis.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "balis.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "balis-online.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "balis-online.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bavariaworldwide.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bavariaworldwide.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "baydsb.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "baydsb.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayerischekueche.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayerischekueche.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayerische-landeskartellbehoerde.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayerische-landeskartellbehoerde.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayerischer-qualitaetspreis.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayerischer-qualitaetspreis.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayerisches-innenminsterium.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayerisches-innenminsterium.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayern.doi-de.net"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayern.doi-de.net"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayern.landtag.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayern.landtag.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bayern.testa-de.net"
+							"Base": {
+								"Tag": 2,
+								"Value": "bayern.testa-de.net"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "baylern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "baylern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "bybn.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "bybn.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "by-cz.eu"
+							"Base": {
+								"Tag": 2,
+								"Value": "by-cz.eu"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "cluster-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "cluster-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "datenschutz-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "datenschutz-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "efre-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "efre-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "elementar-versichern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "elementar-versichern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "elternimnetz.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "elternimnetz.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "elternstolz.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "elternstolz.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "elternstolz.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "elternstolz.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "energie-innovativ.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "energie-innovativ.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "familienhandbuch.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "familienhandbuch.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "fh-aschaffenburg.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "fh-aschaffenburg.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "fh-augsburg.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "fh-augsburg.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "fh-hof.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "fh-hof.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "fhvr-aiv.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "fhvr-aiv.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "food-from-bavaria.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "food-from-bavaria.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "freistaat.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "freistaat.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "gewan.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "gewan.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "gq-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "gq-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "gruenderland.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "gruenderland.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "h-ab.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "h-ab.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "hdbg.eu"
+							"Base": {
+								"Tag": 2,
+								"Value": "hdbg.eu"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "hff-muc.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "hff-muc.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "hff-muenchen.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "hff-muenchen.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "hi-tier.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "hi-tier.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ich-schaffe-die-energiewende.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ich-schaffe-die-energiewende.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ils-allgaeu.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ils-allgaeu.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ilsaugsburg.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ilsaugsburg.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ils-in.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ils-in.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ils-stammdatenpflege.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ils-stammdatenpflege.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ils-support.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ils-support.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "ils-ts.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "ils-ts.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "innenministerium-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "innenministerium-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "innovationspreis-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "innovationspreis-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "it-planungsrat.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "it-planungsrat.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "jupo-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "jupo-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "klassifikationsserver.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "klassifikationsserver.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "kulturportal-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "kulturportal-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "landesentwicklung-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "landesentwicklung-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "landschafftenergie.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "landschafftenergie.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "langquaid.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "langquaid.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lappersdorf.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lappersdorf.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lebenfindetinnenstadt.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lebenfindetinnenstadt.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "leben-findet-innenstadt.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "leben-findet-innenstadt.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lebenfindetinnenstatt.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lebenfindetinnenstatt.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "leben-findet-innen-statt.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "leben-findet-innen-statt.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lotto-akademie.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lotto-akademie.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lotto-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lotto-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "lotto-extranet.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "lotto-extranet.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "matchen.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "matchen.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mitarbeiterportal.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "mitarbeiterportal.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mitarbeiterservice.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "mitarbeiterservice.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mitarbeiterservices.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "mitarbeiterservices.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mitsicherheitanders.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "mitsicherheitanders.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mit-sicherheit-anders.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "mit-sicherheit-anders.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mittelstand-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "mittelstand-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "mobil-parkstetten.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "mobil-parkstetten.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "norman-dlr.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "norman-dlr.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "oddset.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "oddset.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "oekoland-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "oekoland-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "osrz-akdb.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "osrz-akdb.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "regulierungskammer-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "regulierungskammer-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "return-to-bavaria.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "return-to-bavaria.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "rohstoffstrategie-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "rohstoffstrategie-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "schloss-neubeuern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "schloss-neubeuern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "schnelles-internet-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "schnelles-internet-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "schwanger-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "schwanger-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "sfsg.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "sfsg.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "spezialitaetenland-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "spezialitaetenland-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "staatsoper.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "staatsoper.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "staatspreis.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "staatspreis.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "students-neubeuern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "students-neubeuern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "study-in-bavaria.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "study-in-bavaria.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "suenching.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "suenching.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "tegernheim.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "tegernheim.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "teugn.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "teugn.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "thalmassing.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "thalmassing.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "uni-erlangen.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "uni-erlangen.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "unternehmensnachfolge-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "unternehmensnachfolge-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "vwd-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "vwd-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "weiter-studieren-in-bayern.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "weiter-studieren-in-bayern.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "welcomedahoam.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "welcomedahoam.com"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "woche-der-ausbildung.bayern"
+							"Base": {
+								"Tag": 2,
+								"Value": "woche-der-ausbildung.bayern"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "work-in-bavaria.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "work-in-bavaria.de"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "x-trans.eu"
+							"Base": {
+								"Tag": 2,
+								"Value": "x-trans.eu"
+							}
 						},
 						{
-							"Tag": 2,
-							"Value": "zi-daten.de"
+							"Base": {
+								"Tag": 2,
+								"Value": "zi-daten.de"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "ffff:ffff::/2a02102c000000000000000000000000"
+							"Base": {
+								"Tag": 7,
+								"Value": "ffff:ffff::/2a02102c000000000000000000000000"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "ffff:ffff::/2a02102d000000000000000000000000"
+							"Base": {
+								"Tag": 7,
+								"Value": "ffff:ffff::/2a02102d000000000000000000000000"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "ffff:ffff::/2a02102e000000000000000000000000"
+							"Base": {
+								"Tag": 7,
+								"Value": "ffff:ffff::/2a02102e000000000000000000000000"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "ffff:ffff::/2a02102f000000000000000000000000"
+							"Base": {
+								"Tag": 7,
+								"Value": "ffff:ffff::/2a02102f000000000000000000000000"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "255.255.255.0/c3c84600"
+							"Base": {
+								"Tag": 7,
+								"Value": "255.255.255.0/c3c84600"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "255.255.255.0/c3c84700"
+							"Base": {
+								"Tag": 7,
+								"Value": "255.255.255.0/c3c84700"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "255.255.255.0/c122cf00"
+							"Base": {
+								"Tag": 7,
+								"Value": "255.255.255.0/c122cf00"
+							}
 						},
 						{
-							"Tag": 7,
-							"Value": "255.255.255.0/c044d600"
+							"Base": {
+								"Tag": 7,
+								"Value": "255.255.255.0/c044d600"
+							}
 						},
 						{
-							"Tag": 36,
-							"Value": "C=DE,ST=Bayern,O=Freistaat Bayern"
+							"Base": {
+								"Tag": 36,
+								"Value": "C=DE,ST=Bayern,O=Freistaat Bayern"
+							}
 						}
 					]
 				}

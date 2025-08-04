@@ -121,108 +121,186 @@
 				"ExtnValue": {
 					"ExcludedSubtrees": [
 						{
-							"Tag": 1,
-							"Value": ".bbn.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".bbn.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".collins.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".collins.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".prattwhitney.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".prattwhitney.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".ray.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".ray.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".rtx.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".rtx.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".raytheon.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".raytheon.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".sigovs.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".sigovs.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": ".utc.com"
+							"Base": {
+								"Tag": 1,
+								"Value": ".utc.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "bbn.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "bbn.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "collins.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "collins.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "prattwhitney.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "prattwhitney.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "ray.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "ray.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "raytheon.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "raytheon.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "rtx.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "rtx.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "sigovs.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "sigovs.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 1,
-							"Value": "utc.com"
+							"Base": {
+								"Tag": 1,
+								"Value": "utc.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "bbn.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "bbn.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "collins.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "collins.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "prattwhitney.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "prattwhitney.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "ray.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "ray.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "raytheon.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "raytheon.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "rtx.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "rtx.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "sigovs.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "sigovs.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 2,
-							"Value": "utc.com"
+							"Base": {
+								"Tag": 2,
+								"Value": "utc.com"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 36,
-							"Value": "DC=com,DC=rtx"
+							"Base": {
+								"Tag": 36,
+								"Value": "DC=com,DC=rtx"
+							},
+							"UnsupportedMaximum": "00"
 						},
 						{
-							"Tag": 36,
-							"Value": "O=rtx"
+							"Base": {
+								"Tag": 36,
+								"Value": "O=rtx"
+							},
+							"UnsupportedMaximum": "00"
 						}
 					]
 				}

@@ -494,35 +494,54 @@ func ParseBasicConstraintsExtension(der *cryptobyte.String) (BasicConstraints, e
 }
 
 type NameConstraints struct {
-	PermittedSubtrees []GeneralName `json:",omitempty"`
-	ExcludedSubtrees  []GeneralName `json:",omitempty"`
+	PermittedSubtrees []GeneralSubtree `json:",omitempty"`
+	ExcludedSubtrees  []GeneralSubtree `json:",omitempty"`
 }
 
-func ParseGeneralSubtrees(der *cryptobyte.String) ([]GeneralName, error) {
-	// GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
+type GeneralSubtree struct {
 	// GeneralSubtree ::= SEQUENCE {
 	//     base                    GeneralName,
 	//     minimum         [0]     BaseDistance DEFAULT 0,
 	//     maximum         [1]     BaseDistance OPTIONAL }
 	//
 	//  BaseDistance ::= INTEGER (0..MAX)
-	// Because RFC5280 says minimum and maximum can't be present, we don't support them.
-	var ret []GeneralName
+	Base GeneralName
 
-	for !der.Empty() {
-		var subtree cryptobyte.String
-		if !der.ReadASN1(&subtree, asn1.SEQUENCE) {
-			return nil, errors.New("failed to parse general subtrees")
-		}
+	// Unsupported, RFC5280 prohibits
+	UnsupportedMinimum string `json:",omitempty"`
+	UnsupportedMaximum string `json:",omitempty"`
+}
 
-		name, err := ParseGeneralName(&subtree, true)
-		if err != nil {
-			return nil, err
-		}
-		ret = append(ret, name)
+func (gst *GeneralSubtree) Parse(der *cryptobyte.String) error {
+	var subtree cryptobyte.String
+	if !der.ReadASN1(&subtree, asn1.SEQUENCE) {
+		return errors.New("failed to parse general subtree")
 	}
 
-	return ret, nil
+	// In name constraints, we use IP addresses with a CIDR netmask, so pass True to ParseGeneralName
+	gn, err := ParseGeneralName(&subtree, true)
+	if err != nil {
+		return fmt.Errorf("parsing GeneralSubTree: %w", err)
+	}
+
+	var minimum cryptobyte.String
+	if subtree.PeekASN1Tag(asn1.Tag(0).ContextSpecific()) {
+		subtree.ReadASN1(&minimum, asn1.Tag(0).Constructed())
+	}
+	var maximum cryptobyte.String
+	if subtree.PeekASN1Tag(asn1.Tag(1).ContextSpecific()) {
+		subtree.ReadASN1(&maximum, asn1.Tag(1).Constructed())
+	}
+
+	gst.Base = gn
+	gst.UnsupportedMinimum = hex.EncodeToString(minimum)
+	gst.UnsupportedMaximum = hex.EncodeToString(maximum)
+	return nil
+}
+
+func ParseGeneralSubtrees(der *cryptobyte.String) ([]GeneralSubtree, error) {
+	// GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
+	return ParseSequenceOf[GeneralSubtree](der, asn1.SEQUENCE)
 }
 
 // ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
@@ -535,26 +554,28 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 		return NameConstraints{}, errors.New("failed to parse name constraints extension")
 	}
 
-	var permitted cryptobyte.String
-	var hasPermitted bool
-	if !nc.ReadOptionalASN1(&permitted, &hasPermitted, asn1.Tag(0).Constructed().ContextSpecific()) {
-		return NameConstraints{}, errors.New("failed to parse name constraints extension: permitted subtrees")
+	var permittedTag = asn1.Tag(0).ContextSpecific().Constructed()
+	var excludedTag = asn1.Tag(1).ContextSpecific().Constructed()
+
+	var permittedSubtrees []GeneralSubtree
+	var err error
+	if nc.PeekASN1Tag(permittedTag) {
+		permittedSubtrees, err = ParseSequenceOf[GeneralSubtree](&nc, permittedTag)
+		if err != nil {
+			return NameConstraints{}, fmt.Errorf("parsing permitted subtrees: %w", err)
+		}
 	}
 
-	permittedSubtrees, err := ParseGeneralSubtrees(&permitted)
-	if err != nil {
-		return NameConstraints{}, err
+	var excludedSubtrees []GeneralSubtree
+	if nc.PeekASN1Tag(excludedTag) {
+		excludedSubtrees, err = ParseSequenceOf[GeneralSubtree](&nc, excludedTag)
+		if err != nil {
+			return NameConstraints{}, fmt.Errorf("parsing excluded subtrees: %w", err)
+		}
 	}
 
-	var excluded cryptobyte.String
-	var hasExcludedSubtrees bool
-	if !nc.ReadOptionalASN1(&excluded, &hasExcludedSubtrees, asn1.Tag(1).Constructed().ContextSpecific()) {
-		return NameConstraints{}, errors.New("failed to parse name constraints extension: excluded subtrees")
-	}
-
-	excludedSubtrees, err := ParseGeneralSubtrees(&excluded)
-	if err != nil {
-		return NameConstraints{}, err
+	if !nc.Empty() {
+		return NameConstraints{}, fmt.Errorf("trailing data after name constraints: %x", nc)
 	}
 
 	return NameConstraints{
