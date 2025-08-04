@@ -592,6 +592,41 @@ type DistributionPoint struct {
 	DistributionPointName GeneralName
 }
 
+func (d *DistributionPoint) Parse(der *cryptobyte.String) error {
+	var dp cryptobyte.String
+	if !der.ReadASN1(&dp, asn1.SEQUENCE) {
+		return errors.New("failed to read CRL Distribution Point")
+	}
+
+	var dpn cryptobyte.String
+	var hasDPN bool
+	if !dp.ReadOptionalASN1(&dpn, &hasDPN, asn1.Tag(0).Constructed().ContextSpecific()) {
+		return errors.New("failed to read CRL Distribution Point Name")
+	}
+	if !hasDPN {
+		return fmt.Errorf("DistributionPoint had no Distribution Point Name in %s", hex.EncodeToString(dp))
+	}
+
+	var fullName cryptobyte.String
+	var hasFullName bool
+	if !dpn.ReadOptionalASN1(&fullName, &hasFullName, asn1.Tag(0).Constructed().ContextSpecific()) {
+		return errors.New("failed to read FullName")
+	}
+
+	gn, err := ParseGeneralName(&fullName, false)
+	if err != nil {
+		return err
+	}
+
+	if !dp.Empty() {
+		// reasons and CRLIssuer are "MUST NOT" per CA/B BRs, so assume they don't occur
+		return errors.New("unsupported CRLDP options")
+	}
+
+	d.DistributionPointName = gn
+	return nil
+}
+
 // ParseCRLDPExtension as described in RFC5280 4.2.1.13
 // CRLDistributionPoints ::= SEQUENCE SIZE (1..MAX) OF DistributionPoint
 //
@@ -606,48 +641,7 @@ type DistributionPoint struct {
 //
 // ReasonFlags ::= BIT STRING
 func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
-	var dps cryptobyte.String
-	if !der.ReadASN1(&dps, asn1.SEQUENCE) {
-		return nil, errors.New("failed to read CRL Distribution Points extension")
-	}
-
-	var ret []DistributionPoint
-
-	for !dps.Empty() {
-		var dp cryptobyte.String
-		if !dps.ReadASN1(&dp, asn1.SEQUENCE) {
-			return nil, errors.New("failed to read CRL Distribution Point")
-		}
-
-		var dpn cryptobyte.String
-		var hasDPN bool
-		if !dp.ReadOptionalASN1(&dpn, &hasDPN, asn1.Tag(0).Constructed().ContextSpecific()) {
-			return nil, errors.New("failed to read CRL Distribution Point Name")
-		}
-		if !hasDPN {
-			return nil, fmt.Errorf("DistributionPoint had no Distribution Point Name in %s", hex.EncodeToString(dp))
-		}
-
-		var fullName cryptobyte.String
-		var hasFullName bool
-		if !dpn.ReadOptionalASN1(&fullName, &hasFullName, asn1.Tag(0).Constructed().ContextSpecific()) {
-			return nil, errors.New("failed to read FullName")
-		}
-
-		gn, err := ParseGeneralName(&fullName, false)
-		if err != nil {
-			return nil, err
-		}
-
-		if !dp.Empty() {
-			// reasons and CRLIssuer are "MUST NOT" per CA/B BRs, so assume they don't occur
-			return nil, errors.New("unsupported CRLDP options")
-		}
-
-		ret = append(ret, DistributionPoint{DistributionPointName: gn})
-	}
-
-	return ret, nil
+	return ParseSequenceOf[DistributionPoint](der, asn1.SEQUENCE)
 }
 
 // ParseInhibitAnyPolicyExtension as described in RFC5280 4.2.1.14
