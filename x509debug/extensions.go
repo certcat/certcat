@@ -418,23 +418,7 @@ func ParsePolicyMappingsExtension(der *cryptobyte.String) ([]PolicyMap, error) {
 
 // ParseSANExtension as described in RFC5280 4.2.1.6
 func ParseSANExtension(der *cryptobyte.String) ([]GeneralName, error) {
-	var sans cryptobyte.String
-	if !der.ReadASN1(&sans, asn1.SEQUENCE) {
-		return nil, errors.New("failed to parse SAN extension")
-	}
-
-	var ret []GeneralName
-
-	for !sans.Empty() {
-		name, err := ParseGeneralName(&sans, false)
-		if err != nil {
-			return nil, fmt.Errorf("parsing SAN: %w", err)
-		}
-
-		ret = append(ret, name)
-	}
-
-	return ret, nil
+	return ParseSequenceOf[GeneralName](der, asn1.SEQUENCE)
 }
 
 type BasicConstraints struct {

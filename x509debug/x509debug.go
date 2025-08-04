@@ -439,6 +439,15 @@ type GeneralName struct {
 	Value string
 }
 
+func (gn *GeneralName) Parse(der *cryptobyte.String) error {
+	v, err := ParseGeneralName(der, false)
+	if err != nil {
+		return err
+	}
+	*gn = v
+	return nil
+}
+
 // ParseGeneralName parses a GeneralName as defined in RFC5280 4.2.1.6
 // Tag is the context-sensitive tag from the GeneralName CHOICE, and the constants above.
 // TODO: Is a string the best way to represent these names?
