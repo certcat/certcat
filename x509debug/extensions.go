@@ -635,18 +635,9 @@ type AccessDescription struct {
 }
 
 func (ad *AccessDescription) Parse(der *cryptobyte.String) error {
-	var accessDescription cryptobyte.String
-	if !der.ReadASN1(&accessDescription, asn1.SEQUENCE) {
-		return errors.New("failed to read AccessDescription")
-	}
-	oid, err := ParseObjectIdentifier(&accessDescription)
+	oid, accessLocation, err := ParseSequence2[ObjectIdentifier, GeneralName](der)
 	if err != nil {
-		return fmt.Errorf("parsing AccessMethod: %w", err)
-	}
-
-	accessLocation, err := ParseGeneralName(&accessDescription, false)
-	if err != nil {
-		return fmt.Errorf("parsing AccessLocation: %w", err)
+		return fmt.Errorf("parsing AccessDescription: %w", err)
 	}
 
 	ad.AccessMethod = oid
