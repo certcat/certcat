@@ -9,15 +9,18 @@ import (
 	"golang.org/x/crypto/cryptobyte/asn1"
 )
 
+var NotAString = errors.New("unknown string type")
+
 // parseString gives us a Golang string out of ASN.1
 func parseString(tag asn1.Tag, data cryptobyte.String) (string, error) {
 	switch tag {
 	case encoding_asn1.TagBMPString:
 		return parseBMPString(data)
-	case asn1.IA5String, asn1.UTF8String:
+	case asn1.PrintableString, asn1.IA5String, asn1.UTF8String:
+		// TODO: Make sure the semantics of each string type is right
 		return string(data), nil
 	default:
-		return "", errors.New("unknown ASN.1 string tag")
+		return "", NotAString
 	}
 }
 
