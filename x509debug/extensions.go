@@ -23,7 +23,7 @@ func ParseExtensions(der *cryptobyte.String) (Extensions, error) {
 	}
 
 	if hasExtensions {
-		return ParseSequenceOf[Extension](&extensions, asn1.SEQUENCE)
+		return ParseSequenceOf[Extension](&extensions)
 	}
 
 	return nil, nil
@@ -297,7 +297,7 @@ func (pqis *pqis) Parse(der *cryptobyte.String) error {
 	if der.Empty() {
 		return nil
 	}
-	v, err := ParseSequenceOf[PolicyQualifierInfo](der, asn1.SEQUENCE)
+	v, err := ParseSequenceOf[PolicyQualifierInfo](der)
 	if err != nil {
 		return err
 	}
@@ -321,7 +321,7 @@ func (pi *PolicyInformation) Parse(der *cryptobyte.String) error {
 
 // ParseCertPoliciesExtension as described in RFC5280 4.2.1.4
 func ParseCertPoliciesExtension(der *cryptobyte.String) ([]PolicyInformation, error) {
-	return ParseSequenceOf[PolicyInformation](der, asn1.SEQUENCE)
+	return ParseSequenceOf[PolicyInformation](der)
 }
 
 type PolicyQualifierInfo struct {
@@ -400,12 +400,12 @@ func (pm *PolicyMap) Parse(der *cryptobyte.String) error {
 
 // ParsePolicyMappingsExtension as described in RFC5280 4.2.1.5
 func ParsePolicyMappingsExtension(der *cryptobyte.String) ([]PolicyMap, error) {
-	return ParseSequenceOf[PolicyMap](der, asn1.SEQUENCE)
+	return ParseSequenceOf[PolicyMap](der)
 }
 
 // ParseSANExtension as described in RFC5280 4.2.1.6
 func ParseSANExtension(der *cryptobyte.String) ([]GeneralName, error) {
-	return ParseSequenceOf[GeneralName](der, asn1.SEQUENCE)
+	return ParseSequenceOf[GeneralName](der)
 }
 
 type BasicConstraints struct {
@@ -496,7 +496,7 @@ func (gst *GeneralSubtree) Parse(der *cryptobyte.String) error {
 
 func ParseGeneralSubtrees(der *cryptobyte.String) ([]GeneralSubtree, error) {
 	// GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
-	return ParseSequenceOf[GeneralSubtree](der, asn1.SEQUENCE)
+	return ParseSequenceOf[GeneralSubtree](der)
 }
 
 // ParseNameConstraintsExtension as described in RFC5280 4.2.1.10
@@ -515,7 +515,7 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 	var permittedSubtrees []GeneralSubtree
 	var err error
 	if nc.PeekASN1Tag(permittedTag) {
-		permittedSubtrees, err = ParseSequenceOf[GeneralSubtree](&nc, permittedTag)
+		permittedSubtrees, err = ParseSequenceOfTagged[GeneralSubtree](&nc, permittedTag)
 		if err != nil {
 			return NameConstraints{}, fmt.Errorf("parsing permitted subtrees: %w", err)
 		}
@@ -523,7 +523,7 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 
 	var excludedSubtrees []GeneralSubtree
 	if nc.PeekASN1Tag(excludedTag) {
-		excludedSubtrees, err = ParseSequenceOf[GeneralSubtree](&nc, excludedTag)
+		excludedSubtrees, err = ParseSequenceOfTagged[GeneralSubtree](&nc, excludedTag)
 		if err != nil {
 			return NameConstraints{}, fmt.Errorf("parsing excluded subtrees: %w", err)
 		}
@@ -543,7 +543,7 @@ func ParseNameConstraintsExtension(der *cryptobyte.String) (NameConstraints, err
 func ParseExtKeyUsageExtension(der *cryptobyte.String) ([]ObjectIdentifier, error) {
 	//  KeyPurposeId ::= OBJECT IDENTIFIER
 	//  ExtKeyUsageSyntax ::= SEQUENCE SIZE (1..MAX) OF KeyPurposeId
-	return ParseSequenceOf[ObjectIdentifier](der, asn1.SEQUENCE)
+	return ParseSequenceOf[ObjectIdentifier](der)
 }
 
 type DistributionPoint struct {
@@ -601,7 +601,7 @@ func (d *DistributionPoint) Parse(der *cryptobyte.String) error {
 //
 // ReasonFlags ::= BIT STRING
 func ParseCRLDPExtension(der *cryptobyte.String) ([]DistributionPoint, error) {
-	return ParseSequenceOf[DistributionPoint](der, asn1.SEQUENCE)
+	return ParseSequenceOf[DistributionPoint](der)
 }
 
 // ParseInhibitAnyPolicyExtension as described in RFC5280 4.2.1.14
@@ -634,7 +634,7 @@ func (ad *AccessDescription) Parse(der *cryptobyte.String) error {
 
 // ParseAIAExtension as described in RFC5280 4.2.2.1
 func ParseAIAExtension(der *cryptobyte.String) ([]AccessDescription, error) {
-	return ParseSequenceOf[AccessDescription](der, asn1.SEQUENCE)
+	return ParseSequenceOf[AccessDescription](der)
 }
 
 type SCTExtension struct {
@@ -689,7 +689,7 @@ func (t *TLSFeature) Parse(der *cryptobyte.String) error {
 // This is used for OCSP must-staple, though theoretically could be used for other reasons.
 func ParseTLSFeatureExtension(der *cryptobyte.String) ([]TLSFeature, error) {
 	//    Features ::= SEQUENCE OF INTEGER
-	return ParseSequenceOf[TLSFeature](der, asn1.SEQUENCE)
+	return ParseSequenceOf[TLSFeature](der)
 }
 
 type EntrustVersion struct {
