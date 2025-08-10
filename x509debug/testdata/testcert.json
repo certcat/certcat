@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.10045.4.3.3",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=Let's Encrypt,CN=E6",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Let's Encrypt"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "E6"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,14 @@
 				"Time": "2025-06-10T21:13:16Z"
 			}
 		},
-		"Subject": "CN=wtf.inahga.org",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "wtf.inahga.org"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.10045.2.1",

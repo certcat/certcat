@@ -6,7 +6,38 @@
 			"Algorithm": "1.2.840.113549.1.1.11",
 			"Parameter": null
 		},
-		"Issuer": "DC=com,DC=rtx,O=CAs,OU=Root-G3,CN=Raytheon Technologies Root CA",
+		"Issuer": [
+			[
+				{
+					"Type": "0.9.2342.19200300.100.1.25",
+					"Value": "com"
+				}
+			],
+			[
+				{
+					"Type": "0.9.2342.19200300.100.1.25",
+					"Value": "rtx"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "CAs"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "Root-G3"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "Raytheon Technologies Root CA"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +48,32 @@
 				"Time": "2025-08-23T15:37:10Z"
 			}
 		},
-		"Subject": "C=US,O=CertiPath,OU=Certification Authorities,CN=CertiPath Bridge CA - G3",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "CertiPath"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "Certification Authorities"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "CertiPath Bridge CA - G3"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",
@@ -291,14 +347,14 @@
 						{
 							"Base": {
 								"Tag": 36,
-								"Value": "DC=com,DC=rtx"
+								"Value": "0.9.2342.19200300.100.1.25=com,0.9.2342.19200300.100.1.25=rtx"
 							},
 							"UnsupportedMaximum": "00"
 						},
 						{
 							"Base": {
 								"Tag": 36,
-								"Value": "O=rtx"
+								"Value": "2.5.4.10=rtx"
 							},
 							"UnsupportedMaximum": "00"
 						}

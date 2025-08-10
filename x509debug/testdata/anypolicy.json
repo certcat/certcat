@@ -6,7 +6,20 @@
 			"Algorithm": "1.2.840.113549.1.1.11",
 			"Parameter": null
 		},
-		"Issuer": "O=Digital Signature Trust Co.,CN=DST Root CA X3",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Digital Signature Trust Co."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "DST Root CA X3"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +30,26 @@
 				"Time": "2020-10-14T23:17:01Z"
 			}
 		},
-		"Subject": "C=US,O=Let's Encrypt,CN=Let's Encrypt Authority X1",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Let's Encrypt"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "Let's Encrypt Authority X1"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",
@@ -42,13 +74,13 @@
 						{
 							"Base": {
 								"Tag": 36,
-								"Value": "DC=mil"
+								"Value": "0.9.2342.19200300.100.1.25=mil"
 							}
 						},
 						{
 							"Base": {
 								"Tag": 36,
-								"Value": "C=US,O=U.S. Government"
+								"Value": "2.5.4.6=US,2.5.4.10=U.S. Government"
 							}
 						},
 						{

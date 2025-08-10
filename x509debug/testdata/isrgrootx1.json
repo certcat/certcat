@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.113549.1.1.11",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=Internet Security Research Group,CN=ISRG Root X1",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Internet Security Research Group"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "ISRG Root X1"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,26 @@
 				"Time": "2035-06-04T11:04:38Z"
 			}
 		},
-		"Subject": "C=US,O=Internet Security Research Group,CN=ISRG Root X1",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Internet Security Research Group"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "ISRG Root X1"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",

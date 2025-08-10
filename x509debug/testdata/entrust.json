@@ -6,7 +6,38 @@
 			"Algorithm": "1.2.840.113549.1.1.5",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=Entrust, Inc.,OU=www.entrust.net/CPS is incorporated by reference,OU=(c) 2006 Entrust, Inc.,CN=Entrust Root Certification Authority",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Entrust, Inc."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "www.entrust.net/CPS is incorporated by reference"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "(c) 2006 Entrust, Inc."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "Entrust Root Certification Authority"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +48,38 @@
 				"Time": "2026-11-27T20:53:42Z"
 			}
 		},
-		"Subject": "C=US,O=Entrust, Inc.,OU=www.entrust.net/CPS is incorporated by reference,OU=(c) 2006 Entrust, Inc.,CN=Entrust Root Certification Authority",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Entrust, Inc."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "www.entrust.net/CPS is incorporated by reference"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "(c) 2006 Entrust, Inc."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "Entrust Root Certification Authority"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",

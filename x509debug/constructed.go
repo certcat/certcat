@@ -16,6 +16,11 @@ func ParseSequenceOf[T any, PT Parsable[T]](data *cryptobyte.String) ([]T, error
 	return ParseSequenceOfTagged[T, PT](data, asn1.SEQUENCE)
 }
 
+func ParseSetOf[T any, PT Parsable[T]](data *cryptobyte.String) ([]T, error) {
+	// TODO: Verify ordering
+	return ParseSequenceOfTagged[T, PT](data, asn1.SET)
+}
+
 // ParseSequenceOfTagged parses an ASN.1 SequenceOf with a custom tag when using implicit encoding.
 func ParseSequenceOfTagged[T any, PT Parsable[T]](data *cryptobyte.String, tag asn1.Tag) ([]T, error) {
 	var ret []T

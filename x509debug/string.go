@@ -11,6 +11,24 @@ import (
 
 var NotAString = errors.New("unknown string type")
 
+type String string
+
+func (s *String) Parse(data *cryptobyte.String) error {
+	var out cryptobyte.String
+	var tag asn1.Tag
+	if !data.ReadAnyASN1(&out, &tag) {
+		return errors.New("reading string")
+	}
+
+	asdf, err := parseString(tag, out)
+	if err != nil {
+		return err
+	}
+
+	*s = String(asdf)
+	return nil
+}
+
 // parseString gives us a Golang string out of ASN.1
 func parseString(tag asn1.Tag, data cryptobyte.String) (string, error) {
 	switch tag {

@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.10045.4.3.3",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=Let's Encrypt,CN=E5",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Let's Encrypt"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "E5"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,14 @@
 				"Time": "2024-12-05T20:54:22Z"
 			}
 		},
-		"Subject": "CN=floridacartrentals.com",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "floridacartrentals.com"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.10045.2.1",

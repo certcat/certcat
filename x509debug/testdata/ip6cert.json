@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.10045.4.3.3",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=(STAGING) Let's Encrypt,CN=(STAGING) False Fennel E6",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "(STAGING) Let's Encrypt"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "(STAGING) False Fennel E6"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,7 @@
 				"Time": "2025-07-01T13:17:49Z"
 			}
 		},
-		"Subject": "",
+		"Subject": null,
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.10045.2.1",

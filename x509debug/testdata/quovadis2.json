@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.113549.1.1.5",
 			"Parameter": null
 		},
-		"Issuer": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "BM"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "QuoVadis Limited"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "QuoVadis Root CA 2"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,26 @@
 				"Time": "2031-11-24T18:23:33Z"
 			}
 		},
-		"Subject": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "BM"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "QuoVadis Limited"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "QuoVadis Root CA 2"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",
@@ -54,7 +92,7 @@
 					"AuthorityCertIssuer": [
 						{
 							"Tag": 36,
-							"Value": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 2"
+							"Value": "2.5.4.6=BM,2.5.4.10=QuoVadis Limited,2.5.4.3=QuoVadis Root CA 2"
 						}
 					],
 					"AuthorityCertSerialNumber": "0509"

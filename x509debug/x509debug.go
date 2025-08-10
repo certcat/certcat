@@ -237,62 +237,53 @@ func (serial CertificateSerialNumber) MarshalJSON() ([]byte, error) {
 	return json.Marshal(serial.String())
 }
 
+func ParseRDNSequence(der *cryptobyte.String) (RDNSequence, error) {
+	var ret RDNSequence
+	err := (&ret).Parse(der)
+	return ret, err
+}
+
 // RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
 // RelativeDistinguishedName ::= SET SIZE (1..MAX) OF AttributeTypeAndValue
-type RDNSequence string
+type RDNSequence []RelativeDistinguishedName
 
-var DNNames = map[string]string{
-	"2.5.4.3":                    "CN",
-	"2.5.4.7":                    "L",
-	"2.5.4.8":                    "ST",
-	"2.5.4.10":                   "O",
-	"2.5.4.11":                   "OU",
-	"2.5.4.6":                    "C",
-	"2.5.4.9":                    "STREET",
-	"0.9.2342.19200300.100.1.25": "DC",
-	"0.9.2342.19200300.100.1.1":  "UID",
+func (rdns *RDNSequence) Parse(data *cryptobyte.String) error {
+	parsed, err := ParseSequenceOf[RelativeDistinguishedName](data)
+	if err != nil {
+		return err
+	}
+	*rdns = parsed
+	return nil
 }
 
-func RDNString(atv AttributeTypeAndValue) string {
-	name, ok := DNNames[atv.Type.String()]
-	if !ok {
-		name = atv.Type.String()
-	}
-	if atv.Tag == asn1.PrintableString || atv.Tag == asn1.UTF8String || atv.Tag == asn1.IA5String {
-		return name + "=" + string(atv.Value)
-	}
-
-	// Unknown value type, return as hex
-	return fmt.Sprintf("%s=%d:%s", name, atv.Tag, hex.EncodeToString(atv.Value))
-}
-
-// ParseRDNSequence turns the DER RDNs into a string, per RFC4514 representation
-func ParseRDNSequence(der *cryptobyte.String) (RDNSequence, error) {
-	var rdnSequence cryptobyte.String
-	if !der.ReadASN1(&rdnSequence, asn1.SEQUENCE) {
-		return "", errors.New("failed to read RDNSequence")
-	}
-
+func (rdns *RDNSequence) String() string {
 	var ret strings.Builder
-
-	for !rdnSequence.Empty() {
-		var atvSet cryptobyte.String
-		if !rdnSequence.ReadASN1(&atvSet, asn1.SET) {
-			return "", errors.New("failed to read ATVSet")
-		}
-		for !atvSet.Empty() {
-			atv, err := ParseATV(&atvSet)
-			if err != nil {
-				return "", err
-			}
+	for _, rdn := range *rdns {
+		for _, atv := range rdn {
 			if ret.Len() > 0 {
 				ret.WriteRune(',')
 			}
-			ret.WriteString(RDNString(atv))
+			ret.WriteString(atv.Type.String())
+			ret.WriteRune('=')
+			ret.WriteString(string(atv.Value))
 		}
 	}
+	return ret.String()
+}
 
-	return RDNSequence(ret.String()), nil
+// RelativeDistinguishedName ::=
+//
+//	SET SIZE (1..MAX) OF AttributeTypeAndValue
+type RelativeDistinguishedName []AttributeTypeAndValue
+
+func (rdn *RelativeDistinguishedName) Parse(data *cryptobyte.String) error {
+	parsed, err := ParseSetOf[AttributeTypeAndValue](data)
+	if err != nil {
+		return err
+	}
+
+	*rdn = parsed
+	return nil
 }
 
 // AttributeTypeAndValue ::= SEQUENCE {
@@ -301,28 +292,18 @@ func ParseRDNSequence(der *cryptobyte.String) (RDNSequence, error) {
 // This represents an ATV as its oid and its raw value
 type AttributeTypeAndValue struct {
 	Type  ObjectIdentifier
-	Tag   asn1.Tag
-	Value cryptobyte.String
+	Value String
 }
 
-func ParseATV(der *cryptobyte.String) (AttributeTypeAndValue, error) {
-	var atv cryptobyte.String
-	if !der.ReadASN1(&atv, asn1.SEQUENCE) {
-		return AttributeTypeAndValue{}, errors.New("failed to read ATV")
-	}
-
-	oid, err := ParseObjectIdentifier(&atv)
+func (atv *AttributeTypeAndValue) Parse(data *cryptobyte.String) error {
+	oid, s, err := ParseSequence2[ObjectIdentifier, String](data)
 	if err != nil {
-		return AttributeTypeAndValue{}, err
+		return err
 	}
 
-	ret := AttributeTypeAndValue{
-		Type: oid,
-	}
-	if !atv.ReadAnyASN1(&ret.Value, &ret.Tag) {
-		return AttributeTypeAndValue{}, errors.New("failed to read ATV Value")
-	}
-	return ret, nil
+	atv.Type = oid
+	atv.Value = s
+	return nil
 }
 
 //	Validity ::= SEQUENCE {
@@ -486,11 +467,11 @@ func ParseGeneralName(der *cryptobyte.String, useIPCIDR bool) (GeneralName, erro
 			value = net.IP(data).String()
 		}
 	case asn1.Tag(DirectoryName).Constructed():
-		rdn, err := ParseRDNSequence(&data)
+		rdns, err := ParseRDNSequence(&data)
 		if err != nil {
 			return GeneralName{}, err
 		}
-		value = string(rdn)
+		value = rdns.String()
 	default:
 		value = hex.EncodeToString(data)
 	}

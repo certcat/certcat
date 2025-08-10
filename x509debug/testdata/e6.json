@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.113549.1.1.11",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=Internet Security Research Group,CN=ISRG Root X1",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Internet Security Research Group"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "ISRG Root X1"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,26 @@
 				"Time": "2027-03-12T23:59:59Z"
 			}
 		},
-		"Subject": "C=US,O=Let's Encrypt,CN=E6",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Let's Encrypt"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "E6"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.10045.2.1",

@@ -6,7 +6,32 @@
 			"Algorithm": "1.2.840.113549.1.1.5",
 			"Parameter": null
 		},
-		"Issuer": "C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert High Assurance CA-3",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "DigiCert Inc"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.11",
+					"Value": "www.digicert.com"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "DigiCert High Assurance CA-3"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +42,38 @@
 				"Time": "2016-01-20T12:00:00Z"
 			}
 		},
-		"Subject": "C=US,ST=California,L=San Francisco,O=Wikimedia Foundation, Inc.,CN=*.wikipedia.org",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "US"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.8",
+					"Value": "California"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.7",
+					"Value": "San Francisco"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Wikimedia Foundation, Inc."
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "*.wikipedia.org"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",

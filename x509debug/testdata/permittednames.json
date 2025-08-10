@@ -6,7 +6,26 @@
 			"Algorithm": "1.2.840.113549.1.1.11",
 			"Parameter": null
 		},
-		"Issuer": "C=BM,O=QuoVadis Limited,CN=QuoVadis Root CA 3",
+		"Issuer": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "BM"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "QuoVadis Limited"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "QuoVadis Root CA 3"
+				}
+			]
+		],
 		"Validity": {
 			"NotBefore": {
 				"Tag": 23,
@@ -17,7 +36,32 @@
 				"Time": "2026-06-06T14:15:41Z"
 			}
 		},
-		"Subject": "C=DE,ST=Bayern,O=Freistaat Bayern,CN=Bayerische SSL-CA-2016-01",
+		"Subject": [
+			[
+				{
+					"Type": "2.5.4.6",
+					"Value": "DE"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.8",
+					"Value": "Bayern"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.10",
+					"Value": "Freistaat Bayern"
+				}
+			],
+			[
+				{
+					"Type": "2.5.4.3",
+					"Value": "Bayerische SSL-CA-2016-01"
+				}
+			]
+		],
 		"SubjectPublicKeyInfo": {
 			"Algorithm": {
 				"Algorithm": "1.2.840.113549.1.1.1",
@@ -767,7 +811,7 @@
 						{
 							"Base": {
 								"Tag": 36,
-								"Value": "C=DE,ST=Bayern,O=Freistaat Bayern"
+								"Value": "2.5.4.6=DE,2.5.4.8=Bayern,2.5.4.10=Freistaat Bayern"
 							}
 						}
 					]
