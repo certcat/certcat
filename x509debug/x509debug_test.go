@@ -1,4 +1,4 @@
-package x509debug
+package x509debug_test
 
 import (
 	"encoding/json"
@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/certcat/certcat/x509debug"
 	"golang.org/x/crypto/cryptobyte"
 )
 
@@ -37,7 +38,7 @@ func TestCertJSON(t *testing.T) {
 			}
 			block, _ := pem.Decode(data)
 			cert := cryptobyte.String(block.Bytes)
-			parsed, err := ParseCertificate(&cert)
+			parsed, err := x509debug.ParseCertificate(&cert)
 			if err != nil {
 				t.Fatal(err)
 			}
