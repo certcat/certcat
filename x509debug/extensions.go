@@ -113,9 +113,9 @@ func ParseExtensionValue(oid ObjectIdentifier, val cryptobyte.String) (any, erro
 		ret, err = ParseExtKeyUsageExtension(&val)
 	case "2.5.29.54":
 		ret, err = ParseInhibitAnyPolicyExtension(&val)
-	case "1.2.840.113533.7.65.0": // 1
+	case "1.2.840.113533.7.65.0":
 		ret, err = ParseEntrustVersionExtension(&val)
-	case "2.5.29.16": // 1
+	case "2.5.29.16":
 		ret, err = ParsePrivateKeyUsagePeriodExtension(&val)
 	default:
 		ret = UnknownExtension{
@@ -410,7 +410,7 @@ func ParseSANExtension(der *cryptobyte.String) ([]GeneralName, error) {
 
 type BasicConstraints struct {
 	CA                   bool
-	PathLengthConstraint *int `json:",omitempty"`
+	PathLengthConstraint *uint32 `json:",omitempty"`
 }
 
 // ParseBasicConstraintsExtension as described in RFC5280 4.2.1.9
@@ -432,7 +432,7 @@ func ParseBasicConstraintsExtension(der *cryptobyte.String) (BasicConstraints, e
 	}
 
 	if bce.PeekASN1Tag(asn1.INTEGER) {
-		pathLen := -1
+		var pathLen uint32
 		if !bce.ReadASN1Integer(&pathLen) {
 			return BasicConstraints{}, errors.New("failed to parse basic constraints path length")
 		}
