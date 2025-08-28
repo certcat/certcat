@@ -5,6 +5,7 @@
 package x509debug
 
 import (
+	"crypto/sha256"
 	encoding_asn1 "encoding/asn1"
 	"encoding/hex"
 	"encoding/json"
@@ -18,6 +19,13 @@ import (
 	"golang.org/x/crypto/cryptobyte/asn1"
 )
 
+// HexHash is a wrapper around [32]byte, for representing SHA256 hashes as hex in JSON
+type HexHash [32]byte
+
+func (h *HexHash) MarshalJSON() ([]byte, error) {
+	return json.Marshal(hex.EncodeToString(h[:]))
+}
+
 //	Certificate  ::=  SEQUENCE  {
 //	  tbsCertificate     TBSCertificate,
 //	  signatureAlgorithm AlgorithmIdentifier,
@@ -26,9 +34,15 @@ type Certificate struct {
 	TbsCertificate     TBSCertificate
 	SignatureAlgorithm AlgorithmIdentifier
 	SignatureValue     []byte
+
+	// SHA256 fingerprint of the certificate
+	SHA256 HexHash
 }
 
 func ParseCertificate(der *cryptobyte.String) (*Certificate, error) {
+	fingerprint := sha256.New()
+	fingerprint.Write(*der)
+
 	var certificate cryptobyte.String
 	if !der.ReadASN1(&certificate, asn1.SEQUENCE) {
 		return nil, errors.New("failed to read Certificate Sequence")
@@ -60,6 +74,8 @@ func ParseCertificate(der *cryptobyte.String) (*Certificate, error) {
 		TbsCertificate:     parsedTBSCertificate,
 		SignatureAlgorithm: signatureAlgorithm,
 		SignatureValue:     signatureValue,
+
+		SHA256: [32]byte(fingerprint.Sum(nil)),
 	}, nil
 }
 

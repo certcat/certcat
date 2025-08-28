@@ -150,5 +150,6 @@
 		"Algorithm": "1.2.840.10045.4.3.3",
 		"Parameter": null
 	},
-	"SignatureValue": "MGYCMQDbfwUC3FvdO/xHTRp/jOPinPkyUt+eUXpIs1mTegg6o0Z/vZjcB6N0s+UeffomrFgCMQDcepES3Ix/J17Hz6YRh3IWbuPwKsg2Eq2p5Sqct81S4Wi5eLAIIfKeV6+20ptC++w="
+	"SignatureValue": "MGYCMQDbfwUC3FvdO/xHTRp/jOPinPkyUt+eUXpIs1mTegg6o0Z/vZjcB6N0s+UeffomrFgCMQDcepES3Ix/J17Hz6YRh3IWbuPwKsg2Eq2p5Sqct81S4Wi5eLAIIfKeV6+20ptC++w=",
+	"SHA256": "0a411ab2968152f1ef06c0f9f6167c84bb733fd9b4c0b2ed681f0aead84826d3"
 }

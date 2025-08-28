@@ -57,7 +57,7 @@ func ConvertRDNs(rdns x509debug.RDNSequence) []map[string]string {
 // ConvertCertificate a certificate from the parser form to the DB Model
 func ConvertCertificate(certificate *x509debug.Certificate) (Certificate, error) {
 	ret := Certificate{
-		SHA256:                [32]byte{}, // TODO: Calculate certificate fingerprint
+		SHA256:                certificate.SHA256,
 		Serial:                certificate.TbsCertificate.SerialNumber,
 		SignatureAlgorithmOID: certificate.TbsCertificate.Signature.Algorithm.String(), // TODO: Signature Algorithm Parameters
 		Issuer:                ConvertRDNs(certificate.TbsCertificate.Issuer),
