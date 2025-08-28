@@ -376,11 +376,21 @@ func (t *Time) Parse(der *cryptobyte.String) error {
 type SubjectPublicKeyInfo struct {
 	Algorithm        AlgorithmIdentifier
 	SubjectPublicKey []byte
+
+	SHA256 HexHash // SHA256 hash of the SPKI
 }
 
 func ParseSubjectPublicKeyInfo(der *cryptobyte.String) (SubjectPublicKeyInfo, error) {
+	var spkiSequence cryptobyte.String
+	if !der.ReadASN1Element(&spkiSequence, asn1.SEQUENCE) {
+		return SubjectPublicKeyInfo{}, errors.New("failed to read SubjectPublicKeyInfo")
+	}
+
+	spkiHash := sha256.New()
+	spkiHash.Write(spkiSequence)
+
 	var subjectPublicKeyInfo cryptobyte.String
-	if !der.ReadASN1(&subjectPublicKeyInfo, asn1.SEQUENCE) {
+	if !spkiSequence.ReadASN1(&subjectPublicKeyInfo, asn1.SEQUENCE) {
 		return SubjectPublicKeyInfo{}, errors.New("failed to read SubjectPublicKeyInfo")
 	}
 
@@ -397,6 +407,8 @@ func ParseSubjectPublicKeyInfo(der *cryptobyte.String) (SubjectPublicKeyInfo, er
 	return SubjectPublicKeyInfo{
 		Algorithm:        algo,
 		SubjectPublicKey: subjectPublicKey,
+
+		SHA256: [32]byte(spkiHash.Sum(nil)),
 	}, nil
 }
 

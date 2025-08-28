@@ -49,7 +49,8 @@
 				"Algorithm": "1.2.840.10045.2.1",
 				"Parameter": null
 			},
-			"SubjectPublicKey": "BHPGwV0SqQ6vRqlaHOm17Tfp+kwGZ4LhEs+2EeUm1eoiO4D9lvbxkk5C3lUwhMIqFvZ/0ciESYlFgnaNhhqsYCo="
+			"SubjectPublicKey": "BHPGwV0SqQ6vRqlaHOm17Tfp+kwGZ4LhEs+2EeUm1eoiO4D9lvbxkk5C3lUwhMIqFvZ/0ciESYlFgnaNhhqsYCo=",
+			"SHA256": "42b636754b2f66e4cf478445a9af2275430dfea29150986b192d6d01889ff4dc"
 		},
 		"Extensions": [
 			{

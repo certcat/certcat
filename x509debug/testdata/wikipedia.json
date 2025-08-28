@@ -79,7 +79,8 @@
 				"Algorithm": "1.2.840.113549.1.1.1",
 				"Parameter": null
 			},
-			"SubjectPublicKey": "MIIBCgKCAQEAwrk6CAuoqrpRSnruAw+Zd9+kqJw6QhIlT6ksqKXIeH5vmc9g2tCrAkTqtQF+SvZG+1l20kqZ1W12mgwxf3cQ+uZA/pHjSTjahAFXcpVvxtekmvPWoE1XYC042StnSPfUO8LPYox9qbBzlB0SS2iXckizvezpBsHLbXfFBg5QkvfAO5jfYnL6ReFzJejqsKtf5o+tuGtQZgM4UGgSzzSrGXCZmnQAkS+yyerDa/0mVdUhDZUSx55Jlv3OE9pUqYpLyMiWjhS5bfSdGqggfk29C8DuIDbazGifn4wQSazFUbS6I67pHP8jnRgZUwse8SSuREfVU3/7G9UVYqkijLUqIwIDAQAB"
+			"SubjectPublicKey": "MIIBCgKCAQEAwrk6CAuoqrpRSnruAw+Zd9+kqJw6QhIlT6ksqKXIeH5vmc9g2tCrAkTqtQF+SvZG+1l20kqZ1W12mgwxf3cQ+uZA/pHjSTjahAFXcpVvxtekmvPWoE1XYC042StnSPfUO8LPYox9qbBzlB0SS2iXckizvezpBsHLbXfFBg5QkvfAO5jfYnL6ReFzJejqsKtf5o+tuGtQZgM4UGgSzzSrGXCZmnQAkS+yyerDa/0mVdUhDZUSx55Jlv3OE9pUqYpLyMiWjhS5bfSdGqggfk29C8DuIDbazGifn4wQSazFUbS6I67pHP8jnRgZUwse8SSuREfVU3/7G9UVYqkijLUqIwIDAQAB",
+			"SHA256": "994a394a2155bfacc646719bc0dd0bd44bf74a953619fa7cde5275072f5a2377"
 		},
 		"Extensions": [
 			{
